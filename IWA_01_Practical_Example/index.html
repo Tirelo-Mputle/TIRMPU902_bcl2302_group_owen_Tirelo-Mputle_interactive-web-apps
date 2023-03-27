@@ -16,6 +16,8 @@
       rel="stylesheet"
     />
     <!-- END OF GOOGLE FONTS -->
+    <!-- JavaScript file -->
+    <script src="js/scripts.js" defer></script>
   </head>
   <body>
     <header class="header">
@@ -46,10 +48,10 @@
     <!-- END OF TALLY COUNTER SELECT CONTROLS -->
 
     <main class="counter">
-      <input class="counter_value" readonly value="0" />
+      <input class="counter_value" readonly value="0" data-key="number" />
       <div class="counter_actions">
-        <button class="counter_button counter_minus">-</button>
-        <button class="counter_button counter_plus">+</button>
+        <button class="counter_button counter_minus" data-key="minus">-</button>
+        <button class="counter_button counter_plus" data-key="plus">+</button>
       </div>
     </main>
 

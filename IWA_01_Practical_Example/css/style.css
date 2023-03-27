@@ -64,7 +64,7 @@ a {
   background: none;
   width: 50%;
   border-width: 0;
-  color: var(--color-light-grey);
+  color: var(--color-white);
   font-size: 3rem;
   height: 10rem;
   border-bottom: 1px solid var(--color-light-grey);
@@ -75,6 +75,9 @@ a {
 .counter_button:active {
   background-color: var(--color-light-grey);
   transform: translateY(2%);
+}
+.counter_button:disabled {
+  opacity: 0.2;
 }
 .counter_minus {
   border-right: 1px solid var(--color-light-grey);
