@@ -12,14 +12,14 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;900&display=swap"
       rel="stylesheet"
     />
     <!-- END OF GOOGLE FONTS -->
   </head>
   <body>
     <header class="header">
-      <h1>Tally Counter</h1>
+      <h1 class="header_title">Tally Counter</h1>
     </header>
 
     <!-- START OF TALLY COUNTER SELECT CONTROLS -->
@@ -31,10 +31,7 @@
           <option value="multiple">Multiple</option>
         </select>
       </div>
-    </aside>
-    <!-- END OF TALLY COUNTER SELECT CONTROLS -->
 
-    <main class="counter">
       <div class="selection-containers">
         <label for="counter">Counter</label>
         <select name="counter" id="counter">
@@ -43,10 +40,22 @@
           <option value="counter 3">Counter 3</option>
         </select>
       </div>
-
+      <!-- Settings button -->
       <button class="settings">Settings</button>
+    </aside>
+    <!-- END OF TALLY COUNTER SELECT CONTROLS -->
+
+    <main class="counter">
+      <input class="counter_value" readonly value="10" />
+      <div class="counter_actions">
+        <button class="counter_button counter_minus">-</button>
+        <button class="counter_button counter_plus">+</button>
+      </div>
     </main>
 
-    <footer></footer>
+    <footer class="footer">
+      <p>Inspired by <a href="https://tallycount.app/">tallycount.app</a></p>
+      <p>This is a student practice project for learning JavaScript.</p>
+    </footer>
   </body>
 </html>
