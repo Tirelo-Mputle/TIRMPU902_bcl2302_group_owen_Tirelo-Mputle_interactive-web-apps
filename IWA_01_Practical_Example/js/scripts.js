@@ -1,6 +1,6 @@
-const MIN_NUMBER = -7;
-const MAX_NUMBER = 15;
-const STEP_AMOUNT = 2;
+const MIN_NUMBER = -10;
+const MAX_NUMBER = 10;
+const STEP_AMOUNT = 1;
 // ELEMENTS
 const number = document.querySelector("[data-key = number]");
 const minus = document.querySelector("[data-key = minus]");

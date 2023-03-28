@@ -20,7 +20,7 @@ body {
   background-color: var(--color-medium-grey);
   display: flex;
   flex-direction: column;
-
+  align-items: center;
   justify-content: space-between;
 }
 a {
@@ -44,6 +44,7 @@ a {
 /* COUNTER */
 .counter {
   background-color: var(--color-dark-grey);
+  max-width: 30rem;
 }
 .counter_value {
   width: 100%;
@@ -93,5 +94,6 @@ a {
   color: var(--color-light-grey);
   justify-self: end;
   border: 1px solid red;
+  width: 100%;
 }
 /* END OF FOOTER */
