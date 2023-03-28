@@ -1,3 +1,6 @@
+// IMPORTS
+import { hello } from "./codeA.js";
+import { hello as helloB } from "./codeB.js";
 const MIN_NUMBER = -10;
 const MAX_NUMBER = 10;
 const STEP_AMOUNT = 1;
@@ -37,3 +40,4 @@ minus.addEventListener("click", subtractHandler);
 plus.addEventListener("click", addHandler);
 
 console.log("123", parseInt("123") + 8, 123);
+console.log(hello, helloB);
