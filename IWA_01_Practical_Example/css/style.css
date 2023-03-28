@@ -4,6 +4,8 @@
   --color-dark-grey: #33333d;
   --color-medium-grey: #424250;
   --color-light-grey: #d2d6dc;
+  --color-red-light: #f2dede;
+  --color-red-dark: #a94442;
 }
 * {
   box-sizing: border-box;
@@ -97,3 +99,12 @@ a {
   width: 100%;
 }
 /* END OF FOOTER */
+
+/* ERRORS */
+
+.error {
+  padding: 2rem;
+  border-radius: 0.5rem;
+  color: var(--color-red-dark);
+  background-color: var(--color-red-dark);
+}
