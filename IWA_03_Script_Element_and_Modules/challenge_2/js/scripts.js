@@ -18,4 +18,5 @@ import {
 } from "./johannes.js";
 
 const allRoles = `Roles: ${Nwabisa_role}, ${Johannes_role}, ${Alex_role}`;
+
 console.log(allRoles);
