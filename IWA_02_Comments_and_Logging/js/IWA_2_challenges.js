@@ -6,7 +6,7 @@ const surname = "Smith";
 console.log(user, surname);
 
 //CHALLENGE 2
-/*
+/**
  * This is the date that a user created their account
  */
 const date = "10/07/2014";
