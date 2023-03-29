@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>IWA_4.3: Challenge 1</title>
+
+    <script src="js/scripts.js"></script>
+  </head>
+  <body>
+    <h1>IWA_4.3: Challenge 1</h1>
+  </body>
+</html>
+<!-- 
+*Why did the original code not work?
+
+*What changes did you need to make to achieve the intended behaviour?
+-Implicit variables
+Set status and year variables implicitly with const (Uppercase text because they are hard coded).
+Set count with let because it will get changed.
+Use = instead of : to initialize the variables.
+
+-Line 5 (first if statement)
+Change = to ===. Check for strict equality instead of trying to assign it a new value.
+Do this for all conditional in if statements.
+Do not redeclare count each time. Remove the let keyword.
+-line 9 
+Don't reassign DATE variable.
+Create local variable fourthMonth. Give it the value of "April".
+*Why did the change result in the intended behaviour?
+*Are there any other ways in which it could have been solved?
+ -->
