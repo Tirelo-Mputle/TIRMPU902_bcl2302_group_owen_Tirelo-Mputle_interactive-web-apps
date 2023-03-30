@@ -23,21 +23,23 @@ const pens = 5 * NONE_SELECTED;
 const TOTAL_COST_ITEMS = shoes + batteries + pens + shirts + toys;
 const RAND_TO_DOLLAR_EXCHANGE = 18;
 const ITEM_COSTS_RANDS = TOTAL_COST_ITEMS;
+// Converting item costs to dollar and rounding down the value.
 const ITEM_COSTS_DOLLARS = Math.floor(
   TOTAL_COST_ITEMS / RAND_TO_DOLLAR_EXCHANGE
 );
-console.log(ITEM_COSTS_DOLLARS);
 
 // lOCATIONS AND CUSTOMER DETAILS;
 const OTHER_COUNTRIES = "Other countries";
 const RSA = "South Africa";
 const NAM = "Namibia";
 const NK = "North Korea";
+const CUSTOMERS = 1;
 
-let customers = 1;
-
+//Calculates total cost and includes shipping cost if needed.
+//Takes in user location and currency they use.
 const calcTotalCosts = (location, currency) => {
   //Check if item costs are more than the minimum free shipping price
+  //If true, they qualify for free shipping
   const free_shipping_dollars =
     currency === "$" && ITEM_COSTS_DOLLARS >= MIN_SHIPPING_DOLLARS;
 
@@ -53,12 +55,12 @@ const calcTotalCosts = (location, currency) => {
     return;
   }
 
-  if (location === RSA && free_shipping_rands && customers === 1) {
+  if (location === RSA && free_shipping_rands && CUSTOMERS === 1) {
     console.log(FREE_SHIPPING);
     console.log(
       `Location: ${location}. Price: ${currency} ${ITEM_COSTS_RANDS}`
     );
-  } else if (location === NAM && free_shipping_dollars && customers === 1) {
+  } else if (location === NAM && free_shipping_dollars && CUSTOMERS === 1) {
     console.log(FREE_SHIPPING);
     console.log(
       `Location: ${location}. Price: ${currency} ${ITEM_COSTS_DOLLARS}`
@@ -77,4 +79,5 @@ const calcTotalCosts = (location, currency) => {
   }
 };
 
+//Call function with the correct LOCATION and CURRENCY pair.
 calcTotalCosts(RSA, "R");
