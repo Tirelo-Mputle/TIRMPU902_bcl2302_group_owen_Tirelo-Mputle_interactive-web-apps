@@ -1,7 +1,8 @@
-const FREE_WARNING = "Free shipping only applies to single customer orders";
+const FREE_WARNING =
+  "Free shipping only applies to single customer orders from South Africa or Namibia.";
 const BANNED_WARNING =
   "Unfortunately we do not ship to your country of residence";
-const NONE_SELECTED = "0";
+const NONE_SELECTED = 0;
 
 // let location;
 const OTHER_COUNTRIES = "Other countries";
@@ -35,40 +36,38 @@ const calcShipping = (location, currency) => {
   }
 };
 
-calcShipping("South Africa", "R");
-calcShipping("Other countries", "$");
-calcShipping("Namibia", "$");
-calcShipping("North Korea", "$");
-
 const MIN_SHIPPING_DOLLARS = 60;
 const MIN_SHIPPING_RANDS = 1000;
-const FREE_SHIPPING_DOLLARS =
-  currency === "$" && shippingCost >= MIN_SHIPPING_DOLLARS;
-console.log(FREE_SHIPPING_DOLLARS);
-const FREE_SHIPPING_RANDS =
-  currency === "R" && shippingCost >= MIN_SHIPPING_RANDS;
 
 const calcTotalCosts = (location, currency) => {
   const shippingCost = calcShipping(location, currency);
+  const free_shipping_dollars =
+    currency === "$" && shippingCost >= MIN_SHIPPING_DOLLARS;
+  console.log(free_shipping_dollars);
+  const free_shipping_rands =
+    currency === "R" && shippingCost >= MIN_SHIPPING_RANDS;
+
   calcShipping(location, currency);
-  if ((FREE_SHIPPING_DOLLARS || FREE_SHIPPING_RANDS) && customers === 1) {
-    console.log("shipping free");
-  } else {
-    console.log("We have a problem");
+  if (location === RSA || location === NAM) {
+    if ((free_shipping_dollars || free_shipping_rands) && customers === 1) {
+      console.log("shipping free");
+      console.log(location, currency, shippingCost);
+    } else {
+      console.log(FREE_WARNING);
+    }
   }
 };
 
-calcTotalCosts("Namibia", "$");
+calcTotalCosts(NAM, "$");
 
-// shoes = 300 * 1
-// toys - 100 * 5
-// hirts = 150 * 'NONE_SELECTED'
-// batteries 35 * 2
-// pens = 5 * 'NONE_SELECTED'
+const shoes = 300 * 1;
+const toys = 100 * 5;
+const shirts = 150 * NONE_SELECTED;
+const batteries = 35 * 2;
+const pens = 5 * NONE_SELECTED;
 
-// shipping = null
-// currency = $
-
+const totalCostOfItems = shoes + batteries + pens + shirts + toys + 400;
+console.log(totalCostOfItems);
 // if (shoes + batteries + pens + shirts > 1000 &&  ) {
 // 	if (location === NAM && customers < 2) {
 // 			if (location === RSA)
