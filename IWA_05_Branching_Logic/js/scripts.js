@@ -80,4 +80,4 @@ const calcTotalCosts = (location, currency) => {
 };
 
 //Call function with the correct LOCATION and CURRENCY pair.
-calcTotalCosts(RSA, "R");
+calcTotalCosts(NK, "$");
