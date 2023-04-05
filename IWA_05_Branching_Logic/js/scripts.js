@@ -6,9 +6,11 @@ const BANNED_WARNING =
 const FREE_SHIPPING = "Your order qualifies for free shipping!";
 
 //SHIPPING DETAILS
+//min amount for free shipping
 const MIN_SHIPPING_DOLLARS = 60;
 const MIN_SHIPPING_RANDS = 1000;
 const OTHER_COUNTRIES_SHIPPING = 800;
+//shipping cost (no free shipping)
 const RSA_SHIPPING = 400;
 const NAM_SHIPPING = 600;
 
@@ -33,6 +35,8 @@ const OTHER_COUNTRIES = "Other countries";
 const RSA = "South Africa";
 const NAM = "Namibia";
 const NK = "North Korea";
+
+//NUMBER OF CUSTOMERS
 const CUSTOMERS = 1;
 
 //Calculates total cost and includes shipping cost if needed.
@@ -54,7 +58,7 @@ const calcTotalCosts = (location, currency) => {
     console.log(FREE_WARNING);
     return;
   }
-
+  //they qualify for free shipping
   if (location === RSA && free_shipping_rands && CUSTOMERS === 1) {
     console.log(FREE_SHIPPING);
     console.log(
@@ -66,6 +70,7 @@ const calcTotalCosts = (location, currency) => {
       `Location: ${location}. Price: ${currency} ${ITEM_COSTS_DOLLARS}`
     );
   } else {
+    //they don't qualify for free shipping
     const checkoutMessage =
       location === RSA
         ? `Location: ${location}. Your order amount is:${currency}${ITEM_COSTS_RANDS}. Plus ${currency}${RSA_SHIPPING} shipping is: ${currency}${
