@@ -11,17 +11,30 @@ const hourOfDayString = hourOfDay.toString() + "0";
 const minuteOfDayString = minuteOfDay.toString() + "0";
 const taxAsNumber = parseInt(tax.substring(0, 2));
 const taxAsDecimal = taxAsNumber / 100;
+let startingAfterTax;
+let balance;
 if (
   hourOfDay !== undefined &&
   minuteOfDay !== undefined &&
   hourOfDayString === "00" &&
   minuteOfDayString === "00"
 ) {
-  const startingAfterTax = salary - salary * taxAsDecimal;
-  const balance = startingAfterTax - (food + transport + rent);
+  startingAfterTax = salary - salary * taxAsDecimal;
+  balance = startingAfterTax - (food + transport + rent);
 
   //create a global balance variable
-  window.balance = balance;
+  // window.balance = balance;
 }
 
 console.log("R" + balance.toFixed(2));
+
+/*
+Questions:
+1. Where should I declare startingAfterTax and balance
+since they are only to be calculated when the if statement
+comparison is true?
+
+2. window.balance = balance;
+This attaches the valiable to the window object.
+does it create a let or const variable?
+Is it advisable to use this?*/
