@@ -54,6 +54,8 @@ const futureId = 9;
 // Do not change code above this comment
 
 console.log(holidays[futureId] ?? `ID ${futureId} not created yet`);
+//get length of holidays object
+let holidaysLength = Object.keys(holidays).length;
 
 const copied = { ...holidays };
 //Created new Date object
@@ -61,7 +63,7 @@ const newDate = new Date(`25 December ${currentYear}`);
 // hours and minutes are changed 00:00
 newDate.setHours(0, 0);
 const formatDate = `${newDate.getDate()}`;
-const formatMonth = `${newDate.getMonth() + 1}`;
+const formatMonth = `${newDate.getMonth() + 1}`; // +1 because it starts counting at 0
 const formatYear = `${newDate.getFullYear()}`;
 
 const newDateFormatted = `${formatDate.padStart(2, "0")}/${formatMonth.padStart(
@@ -77,7 +79,9 @@ console.log("New date is earlier:", isEarlier);
 if (isEarlier) {
   //-change copied Christmas object name and date
   copied[christmas] = {
+    //spread the christmas object of the copied object
     ...copied[christmas],
+    //replace the name and date
     name: "X-mas",
     date: newDate,
   };
@@ -102,25 +106,34 @@ if (isEarlier) {
       : `${newDateFormatted}`
   );
 }
-
+//create empy holidayTimeStamps array
 const holidayTimeStamps = [];
-for (let i = 0; i < 9; i++) {
+//loop through array to get the unix times of each
+//holidays object
+for (let i = 0; i < holidaysLength; i++) {
   const timeStamp = new Date(holidays[i].date).getTime();
+  //push the unix times into the empty array
   holidayTimeStamps.push(timeStamp);
 }
-
+//get the smallest holidayTimeStamps unix time
 const firstHolidayTimestamp = Math.min(...holidayTimeStamps);
-
+//create a new date object using the firstHolidayTimestamp
 const firstHolidayDate = new Date(firstHolidayTimestamp);
+//get the date, month +1 (because it starts counting from 0)
+//and year of firstHolidayDate
 const firstHolidayDay = `${firstHolidayDate.getDate()}`;
 const firstHolidayMonth = `${firstHolidayDate.getMonth() + 1}`;
 const firstHolidayYear = `${firstHolidayDate.getFullYear()}`;
+//add padStart method to add a 0 to the strings
 console.log(
   `First holiday is: ${firstHolidayDay.padStart(
     2,
     0
   )}/${firstHolidayMonth.padStart(2, 0)}/${firstHolidayYear} `
 );
+
+//Follow the same steps as above but using Math.max
+//to get the largest holidays unix time.
 const lastHolidayTimestamp = Math.max(...holidayTimeStamps);
 
 const lastHolidayDate = new Date(lastHolidayTimestamp);
@@ -133,11 +146,8 @@ console.log(
     0
   )}/${lastHolidayMonth.padStart(2, 0)}/${lastHolidayYear} `
 );
-
-const firstDay = firstHolidayTimestamp.getDate;
-const firstMonth = firstHolidayTimestamp.getMonth;
-const lastDay = lastHolidayTimestamp.getDate;
-const lastMonth = lastHolidayTimestamp.getMonth;
-
-const randomHoliday = holidays[Math.floor(Math.random() * 9)];
+//get a random number and multiply bu holidaysLength
+//round down this number and use it to access the random
+//holidays object
+const randomHoliday = holidays[Math.floor(Math.random() * holidaysLength)];
 console.log(`Random holiday: ${randomHoliday.name}`);
