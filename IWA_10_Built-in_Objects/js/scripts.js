@@ -53,31 +53,55 @@ const futureId = 9;
 
 // Do not change code above this comment
 
+//check if there is an object in the holidays
+//object with the 9/futureId
 console.log(holidays[futureId] ?? `ID ${futureId} not created yet`);
-//get length of holidays object
+
+/**length of holidays object
+ *@type {number} -length of holidays object
+ */
+
 let holidaysLength = Object.keys(holidays).length;
 
+/**
+ * Creates a copy of the `holidays` object using the spread operator.
+ * @type {Object}
+ */
 const copied = { ...holidays };
+
 //Created new Date object
 const newDate = new Date(`25 December ${currentYear}`);
-// hours and minutes are changed 00:00
+// hours and minutes are set to 00:00
 newDate.setHours(0, 0);
+//get the date, month and year from the newDate object
+//the getDate, getMonth and getFullYear methods
 const formatDate = `${newDate.getDate()}`;
 const formatMonth = `${newDate.getMonth() + 1}`; // +1 because it starts counting at 0
 const formatYear = `${newDate.getFullYear()}`;
 
+//results in a date string with this format 01/01/2002 using
+// the formatDate, month and year variables
+// padStart method is used to add a "0" at the start of
+//the string
 const newDateFormatted = `${formatDate.padStart(2, "0")}/${formatMonth.padStart(
   2,
   "0"
 )}/${newDate.getFullYear()}`;
 
-//check if newDate is smaller(earlier) than the holidays date.
+/**
+ *check if newDate is smaller (earlier) than the holidays date.
+ * @return {boolean}
+ */
 const isEarlier = newDate < holidays[christmas].date;
 console.log("New date is earlier:", isEarlier);
 
-//if isEarlier is true
+/**
+ * If isEarlier is true, change the name and date of the
+ * christmas object in the copied object to
+ * "X-mas" and `newDate`.
+ */
+
 if (isEarlier) {
-  //-change copied Christmas object name and date
   copied[christmas] = {
     //spread the christmas object of the copied object
     ...copied[christmas],
@@ -86,6 +110,13 @@ if (isEarlier) {
     date: newDate,
   };
 
+  /**
+   * check if the id,name and date of the copied christmas
+   * object are the same as the holidays christmas object
+   * if true (they are the same) console.log eg: `Id change:false`
+   * if false (they are different) console.log
+   * eg: `Name change: (The changed key value)`
+   */
   // check ID change:
   console.log(
     "ID change:",
@@ -106,24 +137,45 @@ if (isEarlier) {
       : `${newDateFormatted}`
   );
 }
-//create empy holidayTimeStamps array
+
+/**
+ * empy holidayTimeStamps array
+ *@type {Array} - empty array
+ */
 const holidayTimeStamps = [];
-//loop through array to get the unix times of each
-//holidays object
+
+/**
+ *loop through holidays object to get the unix times of each
+ *object in the holidays object
+ */
+
 for (let i = 0; i < holidaysLength; i++) {
   const timeStamp = new Date(holidays[i].date).getTime();
   //push the unix times into the empty array
   holidayTimeStamps.push(timeStamp);
 }
-//get the smallest holidayTimeStamps unix time
+
+/**
+ * the smallest holidayTimeStamps unix time using the
+ * Math.min method
+ * spread the holidayTimeStamps array in the method
+ *@type {number} - smallest holidayTimeStamps unix time
+ */
 const firstHolidayTimestamp = Math.min(...holidayTimeStamps);
-//create a new date object using the firstHolidayTimestamp
+
+/**new date object using the firstHolidayTimestamp
+ * @type {date}
+ */
 const firstHolidayDate = new Date(firstHolidayTimestamp);
-//get the date, month +1 (because it starts counting from 0)
-//and year of firstHolidayDate
+
+/** date value string of firstHolidayDate */
 const firstHolidayDay = `${firstHolidayDate.getDate()}`;
+/** month value string of firstHolidayDate
+ * Added 1 because the months starts counting from 0*/
 const firstHolidayMonth = `${firstHolidayDate.getMonth() + 1}`;
+/** year value string of firstHolidayDate */
 const firstHolidayYear = `${firstHolidayDate.getFullYear()}`;
+
 //add padStart method to add a 0 to the strings
 console.log(
   `First holiday is: ${firstHolidayDay.padStart(
@@ -146,8 +198,13 @@ console.log(
     0
   )}/${lastHolidayMonth.padStart(2, 0)}/${lastHolidayYear} `
 );
-//get a random number and multiply bu holidaysLength
-//round down this number and use it to access the random
-//holidays object
+
+/**
+ *random holidays object
+ * generate a random number,
+ * round it down and multiply by holidaysLength
+ * @type {object} -random holidays object
+ * */
+
 const randomHoliday = holidays[Math.floor(Math.random() * holidaysLength)];
 console.log(`Random holiday: ${randomHoliday.name}`);
