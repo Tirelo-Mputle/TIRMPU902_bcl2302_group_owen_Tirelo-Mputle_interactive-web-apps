@@ -27,10 +27,11 @@ const STATUS_MAP = {
   },
 };
 // Edit below line
+const numberOfBooks = 3;
 //create a loop that starts at 1, ends when i is lower than
 //or equals to 3(the number of books) and increase i
 //by 1 each time it loops
-for (let i = 1; i <= 3; i++) {
+for (let i = 1; i <= numberOfBooks; i++) {
   //get the specific elements for each book
   //this is based on the number of i
   const currentBookStatus = document.querySelector(`#book${i} .status`);
@@ -43,19 +44,19 @@ for (let i = 1; i <= 3; i++) {
   //get the status text
   const status = currentBookStatus.innerText;
   //get the matching status object
-  const currentBookStatusObj = STATUS_MAP[status];
+  const currentBookObject = STATUS_MAP[status];
   //set status text to the color in the status object
-  currentBookStatus.style.color = currentBookStatusObj.color;
+  currentBookStatus.style.color = currentBookObject.color;
   //check if the following status object properties are "true"/truthy
-  currentBookStatusObj.canReserve
+  currentBookObject.canReserve
     ? " " //if true, do nothing
     : //if false, set the disabled attribute on buttons
       //to true
       (currentBookReserveButton.disabled = true);
-  currentBookStatusObj.canCheckout
+  currentBookObject.canCheckout
     ? " "
     : (currentBookCheckoutButton.disabled = true);
-  currentBookStatusObj.canCheckIn
+  currentBookObject.canCheckIn
     ? " "
     : (currentBookCheckInButton.disabled = true);
 }
