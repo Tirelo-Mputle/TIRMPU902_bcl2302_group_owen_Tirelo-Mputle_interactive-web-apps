@@ -34,29 +34,23 @@ const numberOfBooks = 3;
 for (let i = 1; i <= numberOfBooks; i++) {
   //get the specific elements for each book
   //this is based on the number of i
-  const currentBookStatus = document.querySelector(`#book${i} .status`);
-  const currentBookReserveButton = document.querySelector(`#book${i} .reserve`);
-  const currentBookCheckoutButton = document.querySelector(
-    `#book${i} .checkout`
-  );
-  const currentBookCheckInButton = document.querySelector(`#book${i} .checkin`);
+  const bookStatus = document.querySelector(`#book${i} .status`);
+  const reserveButton = document.querySelector(`#book${i} .reserve`);
+  const checkoutButton = document.querySelector(`#book${i} .checkout`);
+  const checkInButton = document.querySelector(`#book${i} .checkin`);
 
   //get the status text
-  const status = currentBookStatus.innerText;
+  const statusText = bookStatus.innerText;
   //get the matching status object
-  const currentBookObject = STATUS_MAP[status];
+  const bookObject = STATUS_MAP[statusText];
   //set status text to the color in the status object
-  currentBookStatus.style.color = currentBookObject.color;
+  bookStatus.style.color = bookObject.color;
   //check if the following status object properties are "true"/truthy
-  currentBookObject.canReserve
+  bookObject.canReserve
     ? " " //if true, do nothing
     : //if false, set the disabled attribute on buttons
       //to true
-      (currentBookReserveButton.disabled = true);
-  currentBookObject.canCheckout
-    ? " "
-    : (currentBookCheckoutButton.disabled = true);
-  currentBookObject.canCheckIn
-    ? " "
-    : (currentBookCheckInButton.disabled = true);
+      (reserveButton.disabled = true);
+  bookObject.canCheckout ? " " : (checkoutButton.disabled = true);
+  bookObject.canCheckIn ? " " : (checkInButton.disabled = true);
 }
