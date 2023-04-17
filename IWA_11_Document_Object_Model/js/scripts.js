@@ -1,31 +1,26 @@
-//orders
-const order1dl = document.querySelector("[data-key=order1]");
-const order2dl = document.querySelector("[data-key=order2]");
-const order3dl = document.querySelector("[data-key=order3]");
+const numberOfOrders = 3;
+/**
+ *Loop through all the orders and create the individual
+ *orders based dataset information in the description list
+ */
 
-//order object
-const orders = {
-  1: order1dl,
-  2: order2dl,
-  3: order3dl,
-};
-//Loop through all the order and create the order
-// specific dom elements
-for (let i = 1; i <= 3; i++) {
+for (let i = 1; i <= numberOfOrders; i++) {
   //create dom elements based on the order number
-  let biscuits = document.querySelector(
+  const biscuits = document.querySelector(
     `[data-key=order${i}] .biscuits .count`
   );
-  let donuts = document.querySelector(`[data-key=order${i}] .donuts .count`);
-  let pancakes = document.querySelector(
+  const donuts = document.querySelector(`[data-key=order${i}] .donuts .count`);
+  const pancakes = document.querySelector(
     `[data-key=order${i}] .pancakes .count`
   );
-  let status = document.querySelector(`[data-key=order${i}] .status dd`);
-  //use order number to get the order dl element
-  let currentOrder = orders[i];
+  const status = document.querySelector(`[data-key=order${i}] .status dd`);
+
+  /**the order description list element*/
+  const currentOrder = document.querySelector(`[data-key=order${i}]`);
 
   //change the innerText of the dom elements based on
-  //the dataset in the current order dl
+  //the dataset in the current order description list
+
   biscuits.innerText = currentOrder.dataset.biscuits;
   donuts.innerText = currentOrder.dataset.donuts;
   pancakes.innerText = currentOrder.dataset.pancakes;
