@@ -41,6 +41,7 @@ for (let i = 1; i <= numberOfBooks; i++) {
 
   //get the status text
   const statusText = bookStatus.innerText;
+
   //get the matching status object
   const bookObject = STATUS_MAP[statusText];
   //set status text to the color in the status object
