@@ -21,7 +21,8 @@ const logCalc = () => {
   //assign calculatedAsNumber to calculated
   //increase calculated by 1 every time logCalc runs which
   //will be every time calcUser runs
-  calculated = calculatedAsNumber + 1;
+  calculated = calculatedAsNumber;
+  calculated += 1;
 };
 
 const calcUser = () => {
