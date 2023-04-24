@@ -38,7 +38,7 @@ const extractBiggest = () => {
     return (biggest = lastNumberInFirst);
   }
 
-  if (lastNumberInSecond > lastNumberInThird) {
+  if (lastNumberInSecond >= lastNumberInThird) {
     second.pop();
     return (biggest = lastNumberInSecond);
   }
