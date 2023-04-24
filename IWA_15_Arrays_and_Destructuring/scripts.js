@@ -9,6 +9,7 @@ const data = {
 };
 
 // Only edit below
+//destructed lists array out of the data object
 const { lists } = data;
 /**The array in the first array in lists */
 const first = lists[0][1] || [];
@@ -17,10 +18,10 @@ const second = lists[1][1] || [];
 /**The array in the third array in lists */
 const third = lists[2][1] || [];
 const result = [];
+
 /**Compares the last number between all
  * the arrays and returns the biggest number.
- * It will remove that number from the array and add
- * it to the results array */
+ * It will remove that number from the array and return it */
 const extractBiggest = () => {
   /**The biggest last number between all
    * the arrays */
@@ -32,16 +33,16 @@ const extractBiggest = () => {
   /**The last number of the third array */
   let lastNumberInThird = third[third.length - 1];
 
-  if (first && lastNumberInFirst >= lastNumberInSecond) {
+  if (lastNumberInFirst >= lastNumberInSecond) {
     first.pop();
     return (biggest = lastNumberInFirst);
   }
 
-  if (second && lastNumberInSecond > lastNumberInThird) {
+  if (lastNumberInSecond > lastNumberInThird) {
     second.pop();
     return (biggest = lastNumberInSecond);
   }
-  if (third && lastNumberInThird) {
+  if (lastNumberInThird) {
     third.pop();
     return (biggest = lastNumberInThird);
   }
