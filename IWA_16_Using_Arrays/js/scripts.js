@@ -1,111 +1,136 @@
 // scripts.js
 
 const MONTHS = [
-    'Jan',
-    'Feb',
-    'Mar',
-    'Apr',
-    'May',
-    'Jun',
-    'Jul',
-    'Aug',
-    'Sep',
-    'Oct',
-    'Nov',
-    'Dec',
-  ]
-  
-  const data = {
-    response: {
-      requestType: "FETCH_ATHLETE_DATA",
-      requestBy: "ALL_MATCHING_ATHLETES",
-      forDisplay: "BEST_RACES",
-  
-      data: {
-        NM372: {
-          firstName: "Nwabisa",
-          surname: "Masiko",
-          id: "NM372",
-          races: [
-            {
-              date: '2022-11-18T20:00:00.000Z',
-              time: [9, 7, 8, 6],
-            },
-            {
-              date: '2022-12-02T20:00:00.000Z',
-              time: [6, 7, 8, 7],
-            },
-          ],
-        },
-  
-        SV782: {
-          firstName: "Schalk",
-          surname: "Venter",
-          id: "SV782",
-          races: [
-            {
-              date: '2022-11-18T20:00:00.000Z',
-              time: [10, 8, 3, 12],
-            },
-            {
-              date: '2022-11-25T20:00:00.000Z',
-              time: [6, 8, 9, 11],
-            },
-            {
-              date: '2022-12-02T20:00:00.000Z',
-              time: [10, 11, 4, 8],
-            },
-            {
-              date: '2022-12-09T20:00:00.000Z',
-              time: [9, 8, 9, 11],
-            },
-          ],
-        },
+  "Jan",
+  "Feb",
+  "Mar",
+  "Apr",
+  "May",
+  "Jun",
+  "Jul",
+  "Aug",
+  "Sep",
+  "Oct",
+  "Nov",
+  "Dec",
+];
+
+const data = {
+  response: {
+    requestType: "FETCH_ATHLETE_DATA",
+    requestBy: "ALL_MATCHING_ATHLETES",
+    forDisplay: "BEST_RACES",
+
+    data: {
+      NM372: {
+        firstName: "Nwabisa",
+        surname: "Masiko",
+        id: "NM372",
+        races: [
+          {
+            date: "2022-11-18T20:00:00.000Z",
+            time: [9, 7, 8, 6],
+          },
+          {
+            date: "2022-12-02T20:00:00.000Z",
+            time: [6, 7, 8, 7],
+          },
+        ],
+      },
+
+      SV782: {
+        firstName: "Schalk",
+        surname: "Venter",
+        id: "SV782",
+        races: [
+          {
+            date: "2022-11-18T20:00:00.000Z",
+            time: [10, 8, 3, 12],
+          },
+          {
+            date: "2022-11-25T20:00:00.000Z",
+            time: [6, 8, 9, 11],
+          },
+          {
+            date: "2022-12-02T20:00:00.000Z",
+            time: [10, 11, 4, 8],
+          },
+          {
+            date: "2022-12-09T20:00:00.000Z",
+            time: [9, 8, 9, 11],
+          },
+        ],
       },
     },
-  };
-  
-  // Only edit below this comment
-  
-  const createHtml = (athlete) => {
-    firstName, surname, id, races = athlete
-    [date], [time] = races.reverse()
-  
-    const fragment = document.createDocumentFragment();
-  
-    title = document.createElement(h2);
-    title= id;
-    fragment.appendChild(title);
-  
-    const list = document.createElement(dl);
-  
-    const day = date.getDate();
-    const month = MONTHS[date.month];
-    const year = date.year;
-  
-    first, second, third, fourth = timeAsArray;
-    total = first + second + third + fourth;
-  
-    const hours = total / 60;
-    const minutes = total / hours / 60;
-  
-    list.innerHTML = /* html */ `
+  },
+};
+
+// Only edit below this comment
+
+/**Creates an Html element object with the athlete data
+ * @param {object}
+ */
+
+/**AthledeData stores the data object containing the
+ * atheletes data
+ */
+const {
+  response: { data: athletes },
+} = data;
+/**The atheletes codes array */
+const athletesCodes = [...Object.keys(athletes)];
+
+const createHtml = (athleteCode) => {
+  //Get destructure variables from the athlete code object
+  const { firstName, surname, id, races } = athletes[athleteCode];
+  //create a fragment object
+  const fragment = document.createDocumentFragment();
+
+  const title = document.createElement("h2");
+  title.innerText = id;
+  fragment.appendChild(title);
+
+  const list = document.createElement("dl");
+  //destructure date and time from the last object in
+  //the races array
+  const { date, time } = races[races.length - 1];
+  //create new date object
+  const newDate = new Date(date);
+  const day = newDate.getDate();
+  const month = MONTHS[newDate.getMonth()];
+  const year = newDate.getFullYear();
+
+  //get the sum of the times in the times array
+  const initialValue = 0;
+  const sumOfTimes = time.reduce(
+    (accumulator, currentValue) => accumulator + currentValue,
+    initialValue
+  );
+
+  const hours = Math.floor(sumOfTimes / 60);
+
+  const minutes = sumOfTimes % 60;
+  //list HTML content
+  list.innerHTML = /* html */ `
       <dt>Athlete</dt>
-      <dd>${firstName surname}</dd>
-  
+      <dd>${firstName} ${surname}</dd>
+
       <dt>Total Races</dt>
-      <dd>${races}</dd>
-  
+      <dd>${races.length}</dd>
+
       <dt>Event Date (Latest)</dt>
-      <dd>${day month year}</dd>
-  
+      <dd>${day} ${month} ${year}</dd>
+
       <dt>Total Time (Latest)</dt>
-      <dd>${hours.padStart(2, 0) minutes}</dd>
-    `;
-  
-    fragment.appendChild(list);
-  }
-  
-  [NM372], [SV782] = data
-  document.querySelector(NM372).appendChild(createHtml(NM372));
-  document.querySelector(SV782).appendChild(createHtml(SV782));
+      <dd>${hours.toString().padStart(2, 0)} : ${minutes}</dd>
+      `;
+
+  fragment.appendChild(list);
+  return fragment;
+};
+//select the athlete sections
+const athlete1 = document.querySelector(`[data-athlete="NM372"]`);
+const athlete2 = document.querySelector(`[data-athlete="SV782"]`);
+//append the fragment to the sections
+athlete1.appendChild(createHtml(athletesCodes[0]));
+athlete2.appendChild(createHtml(athletesCodes[1]));
