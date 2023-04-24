@@ -11,11 +11,11 @@ const data = {
 // Only edit below
 const { lists } = data;
 /**The array in the first array in lists */
-const first = false ? [] : lists[0][1];
+const first = lists[0][1] || [];
 /**The array in the second array in lists */
-const second = false ? [] : lists[1][1];
+const second = lists[1][1] || [];
 /**The array in the third array in lists */
-const third = false ? [] : lists[2][1];
+const third = lists[2][1] || [];
 const result = [];
 /**Compares the last number between all
  * the arrays and returns the biggest number.
