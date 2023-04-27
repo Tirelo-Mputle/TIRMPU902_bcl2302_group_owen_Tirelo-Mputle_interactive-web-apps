@@ -67,21 +67,19 @@ const data = {
 
 // Only edit below this comment
 
-/**Creates an Html element object with the athlete data
- * @param {object}
- */
-
-/**AthledeData stores the data object containing the
- * atheletes data
+/**athletes stores the data object containing the
+ * athletes data
  */
 const {
+  //renamed data to athletes due to naming collision
   response: { data: athletes },
 } = data;
-/**The atheletes codes array */
-const athletesCodes = [...Object.keys(athletes)];
 
+/**Creates an Html element object with the athlete data
+ * @param {object} - The specific athlete's code
+ */
 const createHtml = (athleteCode) => {
-  //Get destructure variables from the athlete code object
+  //destructure variables from the athlete code object
   const { firstName, surname, id, races } = athletes[athleteCode];
   //create a fragment object
   const fragment = document.createDocumentFragment();
@@ -102,13 +100,13 @@ const createHtml = (athleteCode) => {
 
   //get the sum of the times in the times array
   const initialValue = 0;
+  /**Sum of the times in the time array */
   const sumOfTimes = time.reduce(
     (accumulator, currentValue) => accumulator + currentValue,
     initialValue
   );
-
+  //Format the time to 12:09 structure
   const hours = Math.floor(sumOfTimes / 60);
-
   const minutes = sumOfTimes % 60;
   //list HTML content
   list.innerHTML = /* html */ `
@@ -131,6 +129,8 @@ const createHtml = (athleteCode) => {
 //select the athlete sections
 const athlete1 = document.querySelector(`[data-athlete="NM372"]`);
 const athlete2 = document.querySelector(`[data-athlete="SV782"]`);
+/**The athletes codes array */
+const athletesCodes = [...Object.keys(athletes)];
 //append the fragment to the sections
 athlete1.appendChild(createHtml(athletesCodes[0]));
 athlete2.appendChild(createHtml(athletesCodes[1]));
