@@ -13,7 +13,9 @@ import {
 } from "./data.js";
 
 const { other, help, add, edit } = html;
-
+//changing state.orders to an array because it is easier to
+//work with
+state.orders = [];
 //focus the add button on page load
 other.add.setAttribute("autofocus", true);
 
@@ -69,13 +71,11 @@ const handleHelpToggle = (event) => {
 const handleAddToggle = (event) => {
   handleToggleOverlay(add.overlay);
   //reset the form data
-  add.title.value = "";
-  add.table.value = 1;
+  add.form.reset();
 };
 
 const handleAddSubmit = (event) => {
   event.preventDefault();
-  const orderedGrid = document.querySelector(`[data-column="ordered"]`);
 
   const order = createOrderData({
     title: add.title.value,
@@ -84,12 +84,64 @@ const handleAddSubmit = (event) => {
   });
 
   html.columns["ordered"].appendChild(createOrderHtml(order));
+  //add order to the orders array
+  state.orders.push(order);
+  console.log(state.orders);
 
   handleToggleOverlay(add.overlay);
 };
-const handleEditToggle = (event) => {};
-const handleEditSubmit = (event) => {};
-const handleDelete = (event) => {};
+/**
+ * Order div element selected when order is clicked for edit
+ */
+let orderSelected;
+let orderMatch;
+const handleEditToggle = (event) => {
+  //looks at the element and its parents to find the elemen
+  //that has the css selector ".order". So that if you click
+  //the order div or any text inside it the handleEditToggle
+  //event will run for that specific order.
+  orderSelected = event.target.closest(".order");
+
+  if (orderSelected || event.target.hasAttribute("data-edit-cancel"))
+    handleToggleOverlay(edit.overlay);
+
+  // loop through the state orders to find the order
+  //when closing the edit overlay, there will be no orderSelected
+  //so do nothing
+  orderMatch = orderSelected
+    ? state.orders.find((item) => {
+        return item.id === orderSelected.dataset.id;
+      })
+    : "";
+  console.log("orderMatch", orderMatch);
+  edit.title.value = orderMatch.title;
+  edit.table.value = orderMatch.table;
+  edit.column.value = orderMatch.column;
+  //remove event listener
+  // html.other.grid.removeEventListener("click", handleEditToggle);
+};
+
+const handleEditSubmit = (event) => {
+  event.preventDefault();
+  edit.title = edit.title.value;
+  edit.table = edit.table.value;
+  edit.column = edit.column.value;
+  console.log(edit.form);
+};
+const handleDelete = (event) => {
+  const editedOrders = state.orders.filter((item) => {
+    return item.id !== orderSelected.dataset.id;
+  });
+  state.orders = editedOrders;
+
+  handleToggleOverlay(edit.overlay);
+  html.columns[`${orderMatch.column}`].innerHTML = "";
+  const fragment = document.createDocumentFragment();
+  for (let order of state.orders) {
+    fragment.appendChild(createOrderHtml(order));
+  }
+  html.columns[`${orderMatch.column}`].appendChild(fragment);
+};
 
 html.add.cancel.addEventListener("click", handleAddToggle);
 html.other.add.addEventListener("click", handleAddToggle);
