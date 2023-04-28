@@ -13,7 +13,7 @@ import {
 } from "./data.js";
 
 const { other, help, add, edit } = html;
-const overlays = [help.overlay, add.overlay, edit.overlay];
+
 //focus the add button on page load
 other.add.setAttribute("autofocus", true);
 
@@ -45,6 +45,14 @@ const handleDragOver = (event) => {
   updateDragging({ over: column });
   updateDraggingHtml({ over: column });
 };
+/**
+ * Will add/remove the open attribute to the element based
+ * on whether it is present or not. The open attribute is
+ * linked to a css selector that will display the overlay when
+ * open attribute is present. It will also focus on the add button
+ * when open attribute is absent.
+ * @param {element} element - html element
+ */
 const handleToggleOverlay = (element) => {
   if (element.hasAttribute("open")) {
     element.removeAttribute("open");
@@ -60,7 +68,11 @@ const handleHelpToggle = (event) => {
 };
 const handleAddToggle = (event) => {
   handleToggleOverlay(add.overlay);
+  //reset the form data
+  add.title.value = "";
+  add.table.value = 1;
 };
+
 const handleAddSubmit = (event) => {
   event.preventDefault();
   const orderedGrid = document.querySelector(`[data-column="ordered"]`);
@@ -70,9 +82,9 @@ const handleAddSubmit = (event) => {
     table: add.table.value,
     column: "ordered",
   });
-  createOrderHtml(order);
-  // .appendChild(createOrderHtml(order));
+
   html.columns["ordered"].appendChild(createOrderHtml(order));
+
   handleToggleOverlay(add.overlay);
 };
 const handleEditToggle = (event) => {};
