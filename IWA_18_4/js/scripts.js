@@ -64,8 +64,15 @@ const handleAddToggle = (event) => {
 const handleAddSubmit = (event) => {
   event.preventDefault();
   const orderedGrid = document.querySelector(`[data-column="ordered"]`);
-  // orderedGrid.appendChild(cr);
 
+  const order = createOrderData({
+    title: add.title.value,
+    table: add.table.value,
+    column: "ordered",
+  });
+  createOrderHtml(order);
+  // .appendChild(createOrderHtml(order));
+  html.columns["ordered"].appendChild(createOrderHtml(order));
   handleToggleOverlay(add.overlay);
 };
 const handleEditToggle = (event) => {};
