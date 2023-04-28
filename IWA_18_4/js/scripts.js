@@ -27,8 +27,6 @@ const reRenderColumns = () => {
     for (let order of state.orders) {
       if (order.column === column) {
         fragment.appendChild(createOrderHtml(order));
-        console.log(order);
-        console.log(column);
       }
     }
     html.columns[`${column}`].appendChild(fragment);
@@ -48,19 +46,26 @@ const reRenderColumns = () => {
 const handleDragOver = (event) => {
   event.preventDefault();
   const path = event.path || event.composedPath();
+
   let column = null;
 
   for (const element of path) {
+    //column in which the object is over
     const { area } = element.dataset;
+    // console.log(event);
+    // console.log(area); //ordered, preparing or served
+
     if (area) {
       column = area;
       break;
     }
   }
-
   if (!column) return;
-  updateDragging({ over: column });
-  updateDraggingHtml({ over: column });
+
+  updateDragging({ over: column }); //eg over: served
+  // console.log(state.dragging, column);
+  updateDraggingHtml({ over: column }); //eg over: served
+  // handleEditSubmit(event);
 };
 /**
  * Will add/remove the open attribute to the element based
@@ -78,8 +83,14 @@ const handleToggleOverlay = (element) => {
     element.setAttribute("open", "open");
   }
 };
-const handleDragStart = (event) => {};
-const handleDragEnd = (event) => {};
+const handleDragStart = (event) => {
+  state.dragging.source = event.target.dataset.id;
+};
+const handleDragEnd = (event) => {
+  handleEditSubmit(event);
+  // state.dragging.source = null;
+  // state.dragging.over = null;
+};
 const handleHelpToggle = (event) => {
   handleToggleOverlay(help.overlay);
 };
@@ -101,7 +112,6 @@ const handleAddSubmit = (event) => {
   html.columns["ordered"].appendChild(createOrderHtml(order));
   //add order to the orders array
   state.orders.push(order);
-  console.log(state.orders);
 
   handleToggleOverlay(add.overlay);
 };
@@ -128,7 +138,7 @@ const handleEditToggle = (event) => {
         return item.id === orderSelected.dataset.id;
       })
     : "";
-  console.log("orderMatch", orderMatch);
+  // console.log("orderMatch", orderMatch);
   edit.title.value = orderMatch.title;
   edit.table.value = orderMatch.table;
   edit.column.value = orderMatch.column;
@@ -138,23 +148,23 @@ const handleEditToggle = (event) => {
 
 const handleEditSubmit = (event) => {
   event.preventDefault();
-
+  console.log(state.dragging.over);
   const edittedOrder = {
     ...orderMatch,
     title: edit.title.value,
     table: edit.table.value,
-    column: edit.column.value,
+    // column: state.dragging.over,
+    column: state.dragging.source ? state.dragging.over : edit.column.value,
   };
-
+  console.log(state.dragging.over);
   const edittedStateOrders = state.orders.map((item) => {
     if (item.id === edittedOrder.id) {
       return edittedOrder;
     } else return item;
   });
   state.orders = edittedStateOrders;
-  console.log(state.orders);
-
-  handleToggleOverlay(edit.overlay);
+  // if (state.dragging.source) handleToggleOverlay(edit.overlay);
+  state.dragging.source ?? handleToggleOverlay(edit.overlay);
   //adding the orders to the correct column
   reRenderColumns();
 };

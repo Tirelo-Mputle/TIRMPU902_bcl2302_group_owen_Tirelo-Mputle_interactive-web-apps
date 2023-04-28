@@ -88,11 +88,15 @@ export const createOrderData = (props) => {
  * time a new HTML element is dragged over, regardless whether it part of the
  * same column or not)
  *
- * @param {object} newDragging
+ * @param {object} newDragging //{over:column} eg {over: preparing}
  */
 export const updateDragging = (newDragging) => {
+  const { over: overNew } = newDragging;
+  // console.log(newDragging, overNew); //eg{over: preparing}
+
   const { source = state.dragging.source, over = state.dragging.over } =
     newDragging;
+  // console.log("source", source, "over", over);
   if (over === state.dragging.over) return;
 
   state.dragging = {
