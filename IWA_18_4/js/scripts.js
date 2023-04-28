@@ -166,12 +166,6 @@ const handleDelete = (event) => {
 
   handleToggleOverlay(edit.overlay);
   reRenderColumns();
-  // html.columns[`${orderMatch.column}`].innerHTML = "";
-  // const fragment = document.createDocumentFragment();
-  // for (let order of state.orders) {
-  //   fragment.appendChild(createOrderHtml(order));
-  // }
-  // html.columns[`${orderMatch.column}`].appendChild(fragment);
 };
 
 html.add.cancel.addEventListener("click", handleAddToggle);
