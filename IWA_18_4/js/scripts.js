@@ -123,10 +123,30 @@ const handleEditToggle = (event) => {
 
 const handleEditSubmit = (event) => {
   event.preventDefault();
-  edit.title = edit.title.value;
-  edit.table = edit.table.value;
-  edit.column = edit.column.value;
-  console.log(edit.form);
+  console.log("hello");
+  console.log(orderMatch);
+  const edittedOrder = {
+    ...orderMatch,
+    title: edit.title.value,
+    table: edit.table.value,
+    column: edit.column.value,
+  };
+  console.log(orderMatch);
+  const edittedStateOrders = state.orders.map((item) => {
+    if (item.id === edittedOrder.id) {
+      return edittedOrder;
+    } else return item;
+  });
+  state.orders = edittedStateOrders;
+  console.log(state.orders);
+
+  handleToggleOverlay(edit.overlay);
+  html.columns[`${orderMatch.column}`].innerHTML = "";
+  const fragment = document.createDocumentFragment();
+  for (let order of state.orders) {
+    fragment.appendChild(createOrderHtml(order));
+  }
+  html.columns[`${orderMatch.column}`].appendChild(fragment);
 };
 const handleDelete = (event) => {
   const editedOrders = state.orders.filter((item) => {
