@@ -18,7 +18,22 @@ const { other, help, add, edit } = html;
 state.orders = [];
 //focus the add button on page load
 other.add.setAttribute("autofocus", true);
+//adding the orders to the correct column
+const reRenderColumns = () => {
+  for (const column of COLUMNS) {
+    html.columns[`${column}`].innerHTML = "";
+    const fragment = document.createDocumentFragment();
 
+    for (let order of state.orders) {
+      if (order.column === column) {
+        fragment.appendChild(createOrderHtml(order));
+        console.log(order);
+        console.log(column);
+      }
+    }
+    html.columns[`${column}`].appendChild(fragment);
+  }
+};
 /**
  * A handler that fires when a user drags over any element inside a column. In
  * order to determine which column the user is dragging over the entire event
@@ -141,21 +156,7 @@ const handleEditSubmit = (event) => {
 
   handleToggleOverlay(edit.overlay);
   //adding the orders to the correct column
-  for (const column of COLUMNS) {
-    html.columns[`${column}`].innerHTML = "";
-    const fragment = document.createDocumentFragment();
-
-    for (let order of state.orders) {
-      if (order.column === column) {
-        fragment.appendChild(createOrderHtml(order));
-        console.log(order);
-        console.log(column);
-      }
-
-      // fragment.appendChild(createOrderHtml(order));
-    }
-    html.columns[`${column}`].appendChild(fragment);
-  }
+  reRenderColumns();
 };
 const handleDelete = (event) => {
   const editedOrders = state.orders.filter((item) => {
@@ -164,12 +165,13 @@ const handleDelete = (event) => {
   state.orders = editedOrders;
 
   handleToggleOverlay(edit.overlay);
-  html.columns[`${orderMatch.column}`].innerHTML = "";
-  const fragment = document.createDocumentFragment();
-  for (let order of state.orders) {
-    fragment.appendChild(createOrderHtml(order));
-  }
-  html.columns[`${orderMatch.column}`].appendChild(fragment);
+  reRenderColumns();
+  // html.columns[`${orderMatch.column}`].innerHTML = "";
+  // const fragment = document.createDocumentFragment();
+  // for (let order of state.orders) {
+  //   fragment.appendChild(createOrderHtml(order));
+  // }
+  // html.columns[`${orderMatch.column}`].appendChild(fragment);
 };
 
 html.add.cancel.addEventListener("click", handleAddToggle);
