@@ -123,15 +123,14 @@ const handleEditToggle = (event) => {
 
 const handleEditSubmit = (event) => {
   event.preventDefault();
-  console.log("hello");
-  console.log(orderMatch);
+
   const edittedOrder = {
     ...orderMatch,
     title: edit.title.value,
     table: edit.table.value,
     column: edit.column.value,
   };
-  console.log(orderMatch);
+
   const edittedStateOrders = state.orders.map((item) => {
     if (item.id === edittedOrder.id) {
       return edittedOrder;
@@ -141,12 +140,22 @@ const handleEditSubmit = (event) => {
   console.log(state.orders);
 
   handleToggleOverlay(edit.overlay);
-  html.columns[`${orderMatch.column}`].innerHTML = "";
-  const fragment = document.createDocumentFragment();
-  for (let order of state.orders) {
-    fragment.appendChild(createOrderHtml(order));
+  //adding the orders to the correct column
+  for (const column of COLUMNS) {
+    html.columns[`${column}`].innerHTML = "";
+    const fragment = document.createDocumentFragment();
+
+    for (let order of state.orders) {
+      if (order.column === column) {
+        fragment.appendChild(createOrderHtml(order));
+        console.log(order);
+        console.log(column);
+      }
+
+      // fragment.appendChild(createOrderHtml(order));
+    }
+    html.columns[`${column}`].appendChild(fragment);
   }
-  html.columns[`${orderMatch.column}`].appendChild(fragment);
 };
 const handleDelete = (event) => {
   const editedOrders = state.orders.filter((item) => {
