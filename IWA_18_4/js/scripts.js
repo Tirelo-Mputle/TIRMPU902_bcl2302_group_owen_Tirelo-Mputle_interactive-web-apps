@@ -3,7 +3,7 @@ import {
   html,
   updateDraggingHtml,
   moveToColumn,
-} from "./view";
+} from "./view.js";
 import {
   TABLES,
   COLUMNS,
@@ -11,6 +11,11 @@ import {
   createOrderData,
   updateDragging,
 } from "./data.js";
+
+const { other, help, add, edit } = html;
+const overlays = [help.overlay, add.overlay, edit.overlay];
+//focus the add button on page load
+other.add.setAttribute("autofocus", true);
 
 /**
  * A handler that fires when a user drags over any element inside a column. In
@@ -40,12 +45,29 @@ const handleDragOver = (event) => {
   updateDragging({ over: column });
   updateDraggingHtml({ over: column });
 };
-
+const handleToggleOverlay = (element) => {
+  if (element.hasAttribute("open")) {
+    element.removeAttribute("open");
+    html.other.add.focus();
+  } else {
+    element.setAttribute("open", "open");
+  }
+};
 const handleDragStart = (event) => {};
 const handleDragEnd = (event) => {};
-const handleHelpToggle = (event) => {};
-const handleAddToggle = (event) => {};
-const handleAddSubmit = (event) => {};
+const handleHelpToggle = (event) => {
+  handleToggleOverlay(help.overlay);
+};
+const handleAddToggle = (event) => {
+  handleToggleOverlay(add.overlay);
+};
+const handleAddSubmit = (event) => {
+  event.preventDefault();
+  const orderedGrid = document.querySelector(`[data-column="ordered"]`);
+  // orderedGrid.appendChild(cr);
+
+  handleToggleOverlay(add.overlay);
+};
 const handleEditToggle = (event) => {};
 const handleEditSubmit = (event) => {};
 const handleDelete = (event) => {};
