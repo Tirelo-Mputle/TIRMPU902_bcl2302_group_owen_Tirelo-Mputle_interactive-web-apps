@@ -65,7 +65,6 @@ const handleDragOver = (event) => {
   updateDragging({ over: column }); //eg over: served
   // console.log(state.dragging, column);
   updateDraggingHtml({ over: column }); //eg over: served
-  // handleEditSubmit(event);
 };
 /**
  * Will add/remove the open attribute to the element based
@@ -83,13 +82,19 @@ const handleToggleOverlay = (element) => {
     element.setAttribute("open", "open");
   }
 };
+let dragging;
 const handleDragStart = (event) => {
+  dragging = true;
   state.dragging.source = event.target.dataset.id;
 };
 const handleDragEnd = (event) => {
-  handleEditSubmit(event);
+  dragging = false;
   // state.dragging.source = null;
   // state.dragging.over = null;
+  // handleEditSubmit(event);
+  console.log(state.dragging);
+  handleEditSubmit(event);
+  console.log(state.dragging);
 };
 const handleHelpToggle = (event) => {
   handleToggleOverlay(help.overlay);
@@ -127,9 +132,6 @@ const handleEditToggle = (event) => {
   //event will run for that specific order.
   orderSelected = event.target.closest(".order");
 
-  if (orderSelected || event.target.hasAttribute("data-edit-cancel"))
-    handleToggleOverlay(edit.overlay);
-
   // loop through the state orders to find the order
   //when closing the edit overlay, there will be no orderSelected
   //so do nothing
@@ -138,6 +140,14 @@ const handleEditToggle = (event) => {
         return item.id === orderSelected.dataset.id;
       })
     : "";
+  console.log(dragging);
+  if (dragging) return;
+  console.log(dragging);
+  console.log("hello");
+  if (orderSelected || event.target.hasAttribute("data-edit-cancel")) {
+    handleToggleOverlay(edit.overlay);
+  }
+
   // console.log("orderMatch", orderMatch);
   edit.title.value = orderMatch.title;
   edit.table.value = orderMatch.table;
@@ -148,15 +158,15 @@ const handleEditToggle = (event) => {
 
 const handleEditSubmit = (event) => {
   event.preventDefault();
-  console.log(state.dragging.over);
+
   const edittedOrder = {
     ...orderMatch,
     title: edit.title.value,
     table: edit.table.value,
-    // column: state.dragging.over,
-    column: state.dragging.source ? state.dragging.over : edit.column.value,
+
+    column: edit.column.value,
   };
-  console.log(state.dragging.over);
+
   const edittedStateOrders = state.orders.map((item) => {
     if (item.id === edittedOrder.id) {
       return edittedOrder;
@@ -164,7 +174,8 @@ const handleEditSubmit = (event) => {
   });
   state.orders = edittedStateOrders;
   // if (state.dragging.source) handleToggleOverlay(edit.overlay);
-  state.dragging.source ?? handleToggleOverlay(edit.overlay);
+  if (edit.column.value) handleToggleOverlay(edit.overlay);
+  // state.dragging.source ?? handleToggleOverlay(edit.overlay);
   //adding the orders to the correct column
   reRenderColumns();
 };
