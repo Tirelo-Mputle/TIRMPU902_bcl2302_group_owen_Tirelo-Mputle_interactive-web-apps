@@ -140,10 +140,7 @@ const handleEditToggle = (event) => {
         return item.id === orderSelected.dataset.id;
       })
     : "";
-  console.log(dragging);
-  if (dragging) return;
-  console.log(dragging);
-  console.log("hello");
+
   if (orderSelected || event.target.hasAttribute("data-edit-cancel")) {
     handleToggleOverlay(edit.overlay);
   }
