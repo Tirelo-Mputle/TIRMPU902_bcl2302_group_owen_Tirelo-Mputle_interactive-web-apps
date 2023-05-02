@@ -1,10 +1,11 @@
-const html = {
+import { BOOKS_PER_PAGE, books, authors, genres } from "./data.js";
+export const html = {
   header: {
     search: document.querySelector("[data-header-search]"),
     settings: document.querySelector("[data-header-settings]"),
   },
   list: {
-    items: document.querySelector("[data-list-items]"),
+    itemsContainer: document.querySelector("[data-list-items]"),
     message: document.querySelector("[data-list-message]"),
     button: document.querySelector("[data-list-button]"),
   },
@@ -35,4 +36,33 @@ const html = {
     //todo add attribute to index.html
     // save: document.querySelector("[data-settings-save]"),
   },
+};
+
+const { header, list, active, search, settings } = html;
+
+/**
+ * Creates a preview of a book
+ * @param {object} book
+ */
+export const createPreview = (book) => {
+  //todo get the list html div
+  const previewItem = document.createElement("div");
+  previewItem.classList.add("preview"); //todo preview_hidden to hide initially
+  const { id, image, title, author } = book;
+  //set its attribute data-preview to id
+  previewItem.setAttribute("id", id);
+  //   set the innerHTML to an image and some text
+  previewItem.innerHTML = /* html */ `
+                  <img
+                      class="preview__image"
+                      src="${image}"
+                  />
+
+                  <div class="preview__info">
+                      <h3 class="preview__title">${title}</h3>
+                      <div class="preview__author">${authors[author]}</div>
+                  </div>
+              `;
+
+  return previewItem;
 };
