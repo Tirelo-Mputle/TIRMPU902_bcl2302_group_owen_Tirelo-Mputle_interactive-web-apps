@@ -1,10 +1,13 @@
 import { BOOKS_PER_PAGE, books, authors, genres } from "./data.js";
-import { html, createPreview } from "./view.js";
+import { html, createPreview, displayPreview } from "./view.js";
 const { header, list, active, search, settings } = html;
 const matches = books;
-const booksPerPage = 36;
+/**Number of pages curently being displayed. 1 page contains 36
+ * books if not they will contain the remaining amount of books in
+ * the books array.
+ */
 let page = 1;
-//if books is falsy or  is not an array, throw error
+//if books is falsey or  is not an array, throw error
 if (!books || !Array.isArray(books)) throw new Error("Source required");
 // assuming that range is first book to the last book
 
@@ -13,52 +16,34 @@ let range = [1, books.length]; //todo find out what range is
 if (!range && range.length < 2)
   throw new Error("Range must be an array with two numbers");
 
-//day mode settings
+/**day mode settings*/
 const day = {
   dark: "10, 10, 20",
   light: "255, 255, 255",
 };
-//night mode settings
+/**night mode settings*/
 const night = {
   dark: "255, 255, 255",
   light: "10, 10, 20",
 };
-//todo As a user, I want to view a list of book previews,
-//todo by title and author, so that I can discover new books
-//todo to read.
-const fragment1 = document.createDocumentFragment();
-//the first 35 books of the books array
-let extractedBooks = books.slice(0, booksPerPage);
 
-//for book of extracted array
-const displayPreview = (booksToPreveiw, frag) => {
-  for (const book of booksToPreveiw) {
-    //create preview
-    const preview = createPreview(book);
-    //Add the 35 preview divs to fragment1
-    frag.appendChild(preview);
-  }
-  // append the fragment to the data-list-items div
-  list.itemsContainer.appendChild(frag);
-};
-displayPreview(extractedBooks, fragment1);
-
+/**Fragment that will contain initial book content displayed when page loads */
+const initialFragment = document.createDocumentFragment();
+/**the first 36 books of the books array*/
+let extractedBooks = books.slice(0, BOOKS_PER_PAGE);
+//display the first 36 books
+displayPreview(extractedBooks, initialFragment);
 let booksDisplayed = [...extractedBooks];
-console.log(booksDisplayed.length);
 let remainingToDisplay = books.length - booksDisplayed.length;
-console.log(remainingToDisplay);
-list.button.innerHTML = `<span>Show more ${remainingToDisplay}</span>`;
-const showMore = () => {
-  //increase the number of pages displayed
+list.button.innerHTML = `<span>Show more </span> <span class="list__remaining">${remainingToDisplay}</span>`;
 
-  // const numBooksDisplayed =
+const handleShowMore = () => {
   const fragmentMore = document.createDocumentFragment();
-
-  const startOfExtractedBooks = booksPerPage * page;
+  const startOfExtractedBooks = BOOKS_PER_PAGE * page;
   if (remainingToDisplay >= 36) {
     extractedBooks = books.slice(
       startOfExtractedBooks,
-      startOfExtractedBooks + booksPerPage
+      startOfExtractedBooks + BOOKS_PER_PAGE
     );
   } else {
     extractedBooks = books.slice(startOfExtractedBooks);
@@ -66,30 +51,16 @@ const showMore = () => {
   }
 
   booksDisplayed = [...booksDisplayed, ...extractedBooks];
-
   remainingToDisplay = books.length - booksDisplayed.length;
   displayPreview(extractedBooks, fragmentMore);
+  //empty out the fragment
   fragmentMore.innerHTML = "";
   page = page + 1;
-
-  //for book of extracted array
-  list.button.innerHTML = `<span>Show more ${remainingToDisplay}</span>`;
-  console.log(remainingToDisplay);
-  //   //get the data list items div, previews // looks like we're adding more
-  //   const extendedBookContent =
-  //   list.itemsContainer.appendChild(createPreviewsFragment(matches, page x BOOKS_PER_PAGE, {page + 1} x BOOKS_PER_PAGE]))
-  //   //todo what is actions
-  //   actions.list.updateRemaining
+  list.button.innerHTML = `<span>Show more </span> <span class="list__remaining">${remainingToDisplay}</span>`;
 };
 
-list.button.addEventListener("click", showMore);
-//     //get the data list items div, previews // looks like we're adding more
-//     document.querySelector([data-list-items]).appendChild(createPreviewsFragment(matches, page x BOOKS_PER_PAGE, {page + 1} x BOOKS_PER_PAGE]))
-//     //todo what is actions
-//     actions.list.updateRemaining()
-//     //increase the number of pages displayed
-//     page = page + 1
-// }
+list.button.addEventListener("click", handleShowMore);
+
 // //fragment to append genres
 // genresFragment = document.createDocumentFragment();
 // element = document.createElement("option");
@@ -196,50 +167,6 @@ list.button.addEventListener("click", showMore);
 //     //else remove the class that shows the message
 //     else data-list-message.class.remove('list__message_show')
 
-//    //clear the data list items div
-//     data-list-items.innerHTML = ''
-//     //fragment to add stuff to
-//     const fragment = document.createDocumentFragment()
-//     //what is source? books array or the filtered results?
-//     //todo find out what this does // get a slice of some array
-//     //What is range?!!!
-//     const extracted = source.slice(range[0], range[1])
-
-//     //for item of extracted
-//     for ({ author, image, title, id }; extracted; i++) {
-//         //get the author, image, title , id (change this to authorId)
-//         const { author: authorId, id, image, title } = props
-//            //create a button element
-//         element = document.createElement('button')
-//         //add the class "preview"
-//         element.classList = 'preview'
-//         //set its attribute data-preview to id
-//         element.setAttribute('data-preview', id)
-
-//         //set the innerHTML to an image and some text
-//         element.innerHTML = /* html */ `
-//             <img
-//                 class="preview__image"
-//                 src="${image}"
-//             />
-
-//             <div class="preview__info">
-//                 <h3 class="preview__title">${title}</h3>
-//                 <div class="preview__author">${authors[authorId]}</div>
-//             </div>
-//         `
-//        //append this element to the fragment
-//         fragment.appendChild(element)
-//     }
-//     //append the filtered items fragment to the data list items div
-//     data-list-items.appendChild(fragments)
-//     //initial === books(array).length - number of books per page(36)
-//     initial === matches.length - [page * BOOKS_PER_PAGE]
-//     //TODO what is remaining //its the number of books
-//     //remaining in the filtered results array that are not being displayed
-//     remaining === hasRemaining ? initial : 0
-//     //change the button disabled attribute
-//     data-list-button.disabled = initial > 0
 //    //change the innerhtml of the data list button
 //     data-list-button.innerHTML = /* html */ `
 //         <span>Show more</span>

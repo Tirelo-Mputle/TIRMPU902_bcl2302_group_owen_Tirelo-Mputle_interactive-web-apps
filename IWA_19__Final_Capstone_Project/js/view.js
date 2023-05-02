@@ -1,4 +1,5 @@
 import { BOOKS_PER_PAGE, books, authors, genres } from "./data.js";
+/** An object containing references the specific html elements */
 export const html = {
   header: {
     search: document.querySelector("[data-header-search]"),
@@ -41,17 +42,18 @@ export const html = {
 const { header, list, active, search, settings } = html;
 
 /**
- * Creates a preview of a book
- * @param {object} book
+ * Creates a preview of a book. The preview will display the book
+ * image,name and authour name.
+ * @param {object} book - a book object containing the name, id, title
+ * etc of the book
  */
 export const createPreview = (book) => {
-  //todo get the list html div
+  /**The individual book div element */
   const previewItem = document.createElement("div");
-  previewItem.classList.add("preview"); //todo preview_hidden to hide initially
+  previewItem.classList.add("preview");
   const { id, image, title, author } = book;
-  //set its attribute data-preview to id
   previewItem.setAttribute("id", id);
-  //   set the innerHTML to an image and some text
+  //   set the innerHTML to an image and title and author text
   previewItem.innerHTML = /* html */ `
                   <img
                       class="preview__image"
@@ -65,4 +67,21 @@ export const createPreview = (book) => {
               `;
 
   return previewItem;
+};
+/**
+ *Appends a section of the books array to the book list already
+ *displayed on the page.
+ * @param {array} booksToPreveiw - a section of the books array
+ * @param {fragment} frag - the created book preview will be appended
+ * to the fragment
+ */
+export const displayPreview = (booksToPreveiw, frag) => {
+  for (const book of booksToPreveiw) {
+    //create preview
+    const preview = createPreview(book);
+    //Add the 36 preview divs to fragment1
+    frag.appendChild(preview);
+  }
+  // append the fragment to the data-list-items div
+  list.itemsContainer.appendChild(frag);
 };
