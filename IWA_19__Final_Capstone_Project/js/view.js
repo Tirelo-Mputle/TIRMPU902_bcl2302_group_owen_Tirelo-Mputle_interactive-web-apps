@@ -85,3 +85,18 @@ export const displayPreview = (booksToPreveiw, frag) => {
   // append the fragment to the data-list-items div
   list.itemsContainer.appendChild(frag);
 };
+
+export const handleBookSummaryOverlay = (book) => {
+  const summaryBook = books.find((item) => {
+    return item.id === book.id;
+  });
+  const { title, image, author, description, published } = summaryBook;
+  const bookAuthor = authors[author];
+  const date = new Date(published);
+  const year = date.getFullYear();
+  active.image.src = image;
+  active.blur.src = image;
+  active.title.innerHTML = title;
+  active.subtitle.innerHTML = `${bookAuthor} (${year})`;
+  active.description.innerHTML = description;
+};

@@ -82,19 +82,12 @@ const handleToggleOverlay = (element) => {
     element.setAttribute("open", "open");
   }
 };
-let dragging;
+
 const handleDragStart = (event) => {
-  dragging = true;
   state.dragging.source = event.target.dataset.id;
 };
 const handleDragEnd = (event) => {
-  dragging = false;
-  // state.dragging.source = null;
-  // state.dragging.over = null;
-  // handleEditSubmit(event);
-  console.log(state.dragging);
   handleEditSubmit(event);
-  console.log(state.dragging);
 };
 const handleHelpToggle = (event) => {
   handleToggleOverlay(help.overlay);
@@ -145,7 +138,6 @@ const handleEditToggle = (event) => {
     handleToggleOverlay(edit.overlay);
   }
 
-  // console.log("orderMatch", orderMatch);
   edit.title.value = orderMatch.title;
   edit.table.value = orderMatch.table;
   edit.column.value = orderMatch.column;
@@ -170,9 +162,9 @@ const handleEditSubmit = (event) => {
     } else return item;
   });
   state.orders = edittedStateOrders;
-  // if (state.dragging.source) handleToggleOverlay(edit.overlay);
-  if (edit.column.value) handleToggleOverlay(edit.overlay);
-  // state.dragging.source ?? handleToggleOverlay(edit.overlay);
+
+  handleToggleOverlay(edit.overlay);
+
   //adding the orders to the correct column
   reRenderColumns();
 };

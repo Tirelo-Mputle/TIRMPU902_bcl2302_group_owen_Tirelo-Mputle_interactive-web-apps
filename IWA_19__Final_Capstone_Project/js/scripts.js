@@ -1,6 +1,14 @@
 import { BOOKS_PER_PAGE, books, authors, genres } from "./data.js";
-import { html, createPreview, displayPreview } from "./view.js";
+import {
+  html,
+  createPreview,
+  displayPreview,
+  handleBookSummaryOverlay,
+} from "./view.js";
 const { header, list, active, search, settings } = html;
+const state = {
+  isBookSummaryOpen: false,
+};
 const matches = books;
 /**Number of pages curently being displayed. 1 page contains 36
  * books if not they will contain the remaining amount of books in
@@ -58,8 +66,27 @@ const handleShowMore = () => {
   page = page + 1;
   list.button.innerHTML = `<span>Show more </span> <span class="list__remaining">${remainingToDisplay}</span>`;
 };
+//clicking
 
+let chosenBook;
+
+const handleToggleBookSummaryPreview = (event) => {
+  const bookSelected = event.target.closest(".preview");
+  chosenBook = bookSelected;
+  if (bookSelected) {
+    active.overlay.setAttribute("open", "open");
+    state.isBookSummaryOpen = true;
+    handleBookSummaryOverlay(chosenBook);
+  } else {
+    active.overlay.removeAttribute("open");
+    state.isBookSummaryOpen = false;
+  }
+};
+
+//event listeners
 list.button.addEventListener("click", handleShowMore);
+list.itemsContainer.addEventListener("click", handleToggleBookSummaryPreview);
+active.close.addEventListener("click", handleToggleBookSummaryPreview);
 
 // //fragment to append genres
 // genresFragment = document.createDocumentFragment();
@@ -103,15 +130,6 @@ list.button.addEventListener("click", handleShowMore);
 // //todo set set style of this element (the body?) when the mode is changed
 // documentElement.style.setProperty('--color-dark', css[v].dark);
 // documentElement.style.setProperty('--color-light', css[v].light);
-// //todo fix show more button
-// data-list-button = "Show more (books.length - BOOKS_PER_PAGE)"
-
-// data-list-button.disabled = !(matches.length - [page * BOOKS_PER_PAGE] > 0)
-
-// data-list-button.innerHTML = /* html */ [
-//     '<span>Show more</span>',
-//     '<span class="list__remaining"> (${matches.length - [page * BOOKS_PER_PAGE] > 0 ? matches.length - [page * BOOKS_PER_PAGE] : 0})</span>',
-// ]
 
 // //data search button
 // data-search-cancel.click() { data-search-overlay.open === false } //todo close the overlay
@@ -191,32 +209,4 @@ list.button.addEventListener("click", handleShowMore);
 //     document.documentElement.style.setProperty('--color-light', css[result.theme].light);
 //     //close the data settings overlay
 //     data-settings-overlay).open === false
-// }
-
-// //clicking
-// data-list-items.click(event) {
-
-//     pathArray = Array.from(event.path || event.composedPath())
-//     active;
-
-//     for (node; pathArray; i++) {
-//         if active break;
-//         const previewId = node?.dataset?.preview
-
-//         for (const singleBook of books) {
-//             if (singleBook.id === id) active = singleBook
-//         }
-//     }
-
-//     if !active return
-//     //if active
-//     //open the data-list-active overlay
-//     data-list-active.open === true
-//     //display the data list image and blue
-//     data-list-blur + data-list-image === active.image
-//     //display the title
-//     data-list-title === active.title
-//     //display subtitle and descriptions
-//     data-list-subtitle === '${authors[active.author]} (${Date(active.published).year})'
-//     data-list-description === active.description
 // }
