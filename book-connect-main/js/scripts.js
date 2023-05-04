@@ -11,16 +11,14 @@ const appStatus = {
 //DISPLAY INTITIAL BOOKS CONTENT
 html.list.itemsContainer.innerHTML = "";
 
-const createPreviewsFragment = (booksArray, bookSliceStart, bookSliceEnd) => {
+const createPreviewsFragment = (bookSliceStart, bookSliceEnd) => {
   // appStatus.extracted = appStatus.matches.slice
   const fragment = document.createDocumentFragment();
-  if (appStatus.booksRemaining >= 36) {
-    appStatus.extracted = appStatus.matches.slice(bookSliceStart, bookSliceEnd);
-  }
-  if (appStatus.booksRemaining <= 36) {
-    appStatus.extracted = appStatus.matches.slice(bookSliceStart);
-    // list.button.disabled = true;
-  }
+  if (appStatus.booksRemaining <= 36)
+    return (appStatus.extracted = appStatus.matches.slice(bookSliceStart));
+
+  appStatus.extracted = appStatus.matches.slice(bookSliceStart, bookSliceEnd);
+
   for (let book of appStatus.extracted) {
     const { author: authorId, id, image, title } = book;
 
@@ -47,18 +45,7 @@ const createPreviewsFragment = (booksArray, bookSliceStart, bookSliceEnd) => {
   return fragment;
 };
 
-//append the fragment containing book preview buttons to the list
-//div element that should contain the books
-html.list.itemsContainer.appendChild(
-  createPreviewsFragment(
-    appStatus.extracted,
-    appStatus.range[0],
-    appStatus.range[1]
-  )
-);
-
-//SHOW MORE BUTTON
-const updateRemaining = () => {
+const updateRemainingBooks = () => {
   /**Initial number of books that have not been displayed yet */
   const remainingToDisplay =
     appStatus.matches.length - [appStatus.page * BOOKS_PER_PAGE];
@@ -78,77 +65,32 @@ const updateRemaining = () => {
           remaining ? appStatus.booksRemaining : 0
         })</span>`);
 };
-updateRemaining();
+//append the fragment containing book preview buttons to the list
+//div element that should contain the books
+html.list.itemsContainer.appendChild(
+  createPreviewsFragment(appStatus.range[0], appStatus.range[1])
+);
+updateRemainingBooks();
 // const createPreviewsFragment(booksArray, page x BOOKS_PER_PAGE, {page + 1} x BOOKS_PER_PAGE]){
 //     booksArray, page x BOOKS_PER_PAGE, {page + 1} x BOOKS_PER_PAGE]
 // }
 // html.list.itemsContainer.appendChild(createPreviewsFragment(matches, page x BOOKS_PER_PAGE, {page + 1} x BOOKS_PER_PAGE]))
-
+//SHOW MORE BUTTON
 const showMoreBooks = () => {
-  console.log(appStatus.extracted);
-  console.log("page", appStatus.page);
   html.list.itemsContainer.appendChild(
     createPreviewsFragment(
-      appStatus.extracted,
       appStatus.page * BOOKS_PER_PAGE,
       (appStatus.page + 1) * BOOKS_PER_PAGE
     )
   );
-  updateRemaining();
+  updateRemainingBooks();
 };
 
 //EVENT LISTENERS
 html.list.button.addEventListener("click", showMoreBooks);
 
+//SEARCH
 // data-search-overlay.open = false
-// fragment = document.createDocumentFragment()
-// // const extracted = books.slice(0, 36)
-
-// for ({ author, image, title, id }; extracted; i++) {
-//   const preview = createPreview({
-//     author,
-//     id,
-//     image,
-//     title,
-//   });
-
-//   fragment.appendChild(preview);
-// }
-
-// data-list-items.appendChild(fragment)
-
-// data-list-button = "Show more (books.length - BOOKS_PER_PAGE)"
-
-// data-list-button.disabled = !(matches.length - [page * BOOKS_PER_PAGE] > 0)
-
-// data-list-button.innerHTML = /* html */ [
-//     '<span>Show more</span>',
-//     '<span class="list__remaining"> (${matches.length - [page * BOOKS_PER_PAGE] > 0 ? matches.length - [page * BOOKS_PER_PAGE] : 0})</span>',
-// ]
-// data-list-button.click() {
-//     document.querySelector([data-list-items]).appendChild(createPreviewsFragment(matches, page x BOOKS_PER_PAGE, {page + 1} x BOOKS_PER_PAGE]))
-//     actions.list.updateRemaining()
-//     page = page + 1
-// }
-
-// if (!books && !Array.isArray(books)) throw new Error('Source required')
-// if (!range && range.length < 2) throw new Error('Range must be an array with two numbers')
-
-// day = {
-//     dark: '10, 10, 20',
-//     light: '255, 255, 255',
-// }
-
-// night = {
-//     dark: '255, 255, 255',
-//     light: '10, 10, 20',
-// }
-
-window.scrollTo({ top: 0, behavior: "smooth" });
-// html.list.button.innerHTML = /* html */ `
-//     <span>Show more</span>
-//     <span class="list__remaining"> (${remaining})</span>
-// `;
 // genres = document.createDocumentFragment()
 // element = document.createElement('option')
 // element.value = 'any'
@@ -226,25 +168,55 @@ window.scrollTo({ top: 0, behavior: "smooth" });
 //     document.documentElement.style.setProperty('--color-light', css[result.theme].light);
 //     data-settings-overlay).open === false
 // }
-//OPEN THE BOOKS SUMMARY OVERLAY
-// data-list-items.click() {
-//     pathArray = Array.from(event.path || event.composedPath())
-//     active;
+//TOGGLE OVERLAYS
+const toggleOverlay = (element) => {
+  if (element.open) {
+    element.close();
+  } else {
+    element.showModal();
+  }
+};
+const handletoggleBookSummaryOverlay = () => {
+  toggleOverlay(html.active.overlay);
+};
+//BOOKS SUMMARY OVERLAY
+const handleSummayOverlay = (event) => {
+  handletoggleBookSummaryOverlay();
+  html.active.close.autofocus = true;
+  const pathArray = Array.from(event.path || event.composedPath());
+  //   active;
+  console.log(pathArray);
+  console.log(event.target);
+  // for (node; pathArray; i++) {
+  //     if active break;
+  //     const previewId = node?.dataset?.preview
 
-//     for (node; pathArray; i++) {
-//         if active break;
-//         const previewId = node?.dataset?.preview
+  //     for (const singleBook of books) {
+  //         if (singleBook.id === id) active = singleBook
+  //     }
+  // }
 
-//         for (const singleBook of books) {
-//             if (singleBook.id === id) active = singleBook
-//         }
-//     }
+  // if !active return
+  // data-list-active.open === true
+  // data-list-blur + data-list-image === active.image
+  // data-list-title === active.title
 
-//     if !active return
-//     data-list-active.open === true
-//     data-list-blur + data-list-image === active.image
-//     data-list-title === active.title
+  // data-list-subtitle === '${authors[active.author]} (${Date(active.published).year})'
+  // data-list-description === active.description
+};
+html.list.itemsContainer.addEventListener("click", handleSummayOverlay);
+html.active.close.addEventListener("click", handletoggleBookSummaryOverlay);
+// if (!books && !Array.isArray(books)) throw new Error('Source required')
+// if (!range && range.length < 2) throw new Error('Range must be an array with two numbers')
 
-//     data-list-subtitle === '${authors[active.author]} (${Date(active.published).year})'
-//     data-list-description === active.description
+// day = {
+//     dark: '10, 10, 20',
+//     light: '255, 255, 255',
 // }
+
+// night = {
+//     dark: '255, 255, 255',
+//     light: '10, 10, 20',
+// }
+
+window.scrollTo({ top: 0, behavior: "smooth" });
