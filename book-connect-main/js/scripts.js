@@ -24,7 +24,7 @@ const createPreviewsFragment = (bookSliceStart, bookSliceEnd) => {
 
     const element = document.createElement("button");
     element.classList = "preview";
-    element.setAttribute("book-id", id);
+    element.setAttribute("id", id);
 
     element.innerHTML = /* html */ `
             <img
@@ -181,28 +181,25 @@ const handletoggleBookSummaryOverlay = () => {
 };
 //BOOKS SUMMARY OVERLAY
 const handleSummayOverlay = (event) => {
-  handletoggleBookSummaryOverlay();
+  const activeBook = event.target.closest(".preview");
+  if (!activeBook) return;
   html.active.close.autofocus = true;
-  const pathArray = Array.from(event.path || event.composedPath());
-  //   active;
-  console.log(pathArray);
-  console.log(event.target);
-  // for (node; pathArray; i++) {
-  //     if active break;
-  //     const previewId = node?.dataset?.preview
 
-  //     for (const singleBook of books) {
-  //         if (singleBook.id === id) active = singleBook
-  //     }
-  // }
+  handletoggleBookSummaryOverlay();
 
-  // if !active return
-  // data-list-active.open === true
-  // data-list-blur + data-list-image === active.image
-  // data-list-title === active.title
-
-  // data-list-subtitle === '${authors[active.author]} (${Date(active.published).year})'
-  // data-list-description === active.description
+  for (let book of books) {
+    if (book.id === activeBook.id) {
+      const { title, image, author, description, published } = book;
+      const bookAuthor = authors[author];
+      const date = new Date(published);
+      const year = date.getFullYear();
+      html.active.image.src = image;
+      html.active.blur.src = image;
+      html.active.title.innerHTML = title;
+      html.active.subtitle.innerHTML = `${bookAuthor} (${year})`;
+      html.active.description.innerHTML = description;
+    }
+  }
 };
 html.list.itemsContainer.addEventListener("click", handleSummayOverlay);
 html.active.close.addEventListener("click", handletoggleBookSummaryOverlay);
