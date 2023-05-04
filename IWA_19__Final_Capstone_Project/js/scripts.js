@@ -38,11 +38,12 @@ const initialFragment = document.createDocumentFragment();
 let extractedBooks = books.slice(0, BOOKS_PER_PAGE);
 //display the first 36 books
 displayPreview(extractedBooks, initialFragment);
-let booksDisplayed = [...extractedBooks];
 let remainingToDisplay = books.length - booksDisplayed.length;
 list.button.innerHTML = `<span>Show more </span> <span class="list__remaining">${remainingToDisplay}</span>`;
 
 const handleShowMore = () => {
+  let remainingToDisplay = books.length - booksDisplayed.length;
+  let booksDisplayed = [...extractedBooks];
   const fragmentMore = document.createDocumentFragment();
   const startOfExtractedBooks = BOOKS_PER_PAGE * page;
   if (remainingToDisplay >= 36) {
