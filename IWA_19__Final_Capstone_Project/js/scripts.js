@@ -1,20 +1,17 @@
 import { BOOKS_PER_PAGE, books, authors, genres } from "./data.js";
-import {
-  html,
-  createPreview,
-  displayPreview,
-  handleBookSummaryOverlay,
-} from "./view.js";
+import { html, displayPreview, handleBookSummaryOverlay } from "./view.js";
 const { header, list, active, search, settings } = html;
 const state = {
   isBookSummaryOpen: false,
+  isOverlayOpen: false,
 };
+let page = 1;
+
 const matches = books;
 /**Number of pages curently being displayed. 1 page contains 36
  * books if not they will contain the remaining amount of books in
  * the books array.
  */
-let page = 1;
 //if books is falsey or  is not an array, throw error
 if (!books || !Array.isArray(books)) throw new Error("Source required");
 // assuming that range is first book to the last book
@@ -66,34 +63,39 @@ const handleShowMore = () => {
   page = page + 1;
   list.button.innerHTML = `<span>Show more </span> <span class="list__remaining">${remainingToDisplay}</span>`;
 };
-//clicking
-
-let chosenBook;
-
-const handleToggleBookSummaryPreview = (event) => {
-  const bookSelected = event.target.closest(".preview");
-  chosenBook = bookSelected;
-  if (bookSelected) {
-    active.overlay.setAttribute("open", "open");
-    state.isBookSummaryOpen = true;
-    handleBookSummaryOverlay(chosenBook);
+const handelToggleOverlay = (element) => {
+  if (element.hasAttribute("open")) {
+    element.removeAttribute("open");
+    state.isOverlayOpen = false;
   } else {
-    active.overlay.removeAttribute("open");
-    state.isBookSummaryOpen = false;
+    element.setAttribute("open", "open");
+    state.isOverlayOpen = true;
   }
 };
-
+const handleToggleSearchOverlay = (event) => {
+  handelToggleOverlay(search.overlay);
+};
+const handleToggleBookSummaryOverlay = () => {
+  handelToggleOverlay(active.overlay);
+};
+const handleBookSummaryContent = (event) => {
+  const bookSelected = event.target.closest(".preview");
+  handleBookSummaryOverlay(bookSelected);
+  handleToggleBookSummaryOverlay();
+};
 //event listeners
 list.button.addEventListener("click", handleShowMore);
-list.itemsContainer.addEventListener("click", handleToggleBookSummaryPreview);
-active.close.addEventListener("click", handleToggleBookSummaryPreview);
-
-// //fragment to append genres
-// genresFragment = document.createDocumentFragment();
-// element = document.createElement("option");
-// element.value = "any";
-// element = "All Genres";
-// genresFragment.appendChild(element);
+list.itemsContainer.addEventListener("click", handleBookSummaryContent);
+active.close.addEventListener("click", handleToggleBookSummaryOverlay);
+search.icon.addEventListener("click", handleToggleSearchOverlay);
+search.cancel.addEventListener("click", handleToggleSearchOverlay);
+//SEARCH FORM
+//genre options
+const genresFragment = document.createDocumentFragment();
+const genreOption = document.createElement("option");
+genreOption.value = "any";
+const allGenres = "All Genres";
+genresFragment.appendChild(genreOption);
 
 // for ([id, name]; Object.entries(genres); i++) {
 //   //didn't know if this was refering to the genres object

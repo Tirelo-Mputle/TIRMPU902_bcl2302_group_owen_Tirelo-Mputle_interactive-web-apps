@@ -198,3 +198,30 @@ for (const htmlColumn of Object.values(html.columns)) {
 for (const htmlArea of Object.values(html.area)) {
   htmlArea.addEventListener("dragover", handleDragOver);
 }
+
+// Owen Rambanduli11:13 AM
+// const handleDragStart = (event) => {
+//     const { id } = event.target.dataset
+//     const { column } = state.orders[id]
+//     updateDragging({ source: id, over: column })
+// }
+// Owen Rambanduli11:15 AM
+// const handleDragStart = (event) => {
+//     const { id } = event.target.dataset
+//     const { column } = state.orders[id]
+//     updateDragging({ source: id, over: column })
+// }
+// const handleAddSubmit = (event) => {
+//     event.preventDefault()
+//     const formData = new FormData(event.target)
+//     const { title, table } = Object.fromEntries(formData)
+//     const newOrder = createOrderData({ title, table, column: 'ordered' })
+
+//     state.orders[newOrder.id] = newOrder
+//     const htmlOrder = createOrderHtml(newOrder)
+//     html.columns[newOrder.column].appendChild(htmlOrder)
+
+//     html.add.form.reset()
+//     html.add.overlay.open = false
+//     html.other.add.focus()
+// }

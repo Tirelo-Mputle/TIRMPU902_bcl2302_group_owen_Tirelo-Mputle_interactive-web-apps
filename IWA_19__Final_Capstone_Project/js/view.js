@@ -26,6 +26,8 @@ export const html = {
     genres: document.querySelector("[data-search-genres]"),
     authors: document.querySelector("[data-search-authors]"),
     cancel: document.querySelector("[data-search-cancel]"),
+    icon: document.querySelector("[data-header-search]"),
+
     //todo add attribute to index.html
     // submit: document.querySelector("[data-search-submit]"),
   },
