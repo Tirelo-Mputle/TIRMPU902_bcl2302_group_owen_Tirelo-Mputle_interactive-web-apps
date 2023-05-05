@@ -136,7 +136,6 @@ const handleSearch = (event) => {
   toggleOverlay(html.search.overlay);
   const formData = new FormData(event.target);
   const filters = Object.fromEntries(formData);
-  console.log(filters);
   html.search.form.reset();
   const titleInput = filters.title.trim().toLowerCase();
 
@@ -175,7 +174,7 @@ const handleSearch = (event) => {
       appStatus.results.push(book);
     }
   }
-  // consoe.log(results);l
+
   if (appStatus.results.length > 0) {
     html.list.itemsContainer.innerHTML = "";
     html.list.message.classList.remove("list__message_show");
@@ -220,34 +219,3 @@ html.list.itemsContainer.addEventListener("click", handleSummayOverlay);
 html.active.close.addEventListener("click", handletoggleBookSummaryOverlay);
 
 window.scrollTo({ top: 0, behavior: "smooth" });
-
-//
-// data-settings-overlay.submit; {
-//     preventDefault()
-//     const formData = new FormData(event.target)
-//     const result = Object.fromEntries(formData)
-//     document.documentElement.style.setProperty('--color-dark', css[result.theme].dark);
-//     document.documentElement.style.setProperty('--color-light', css[result.theme].light);
-//     data-settings-overlay).open === false
-// }
-// if (!books && !Array.isArray(books)) throw new Error('Source required')
-// if (!range && range.length < 2) throw new Error('Range must be an array with two numbers')
-
-// data-settings-theme.value === window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'night' : 'day'
-// v = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches? 'night' | 'day'
-
-// documentElement.style.setProperty('--color-dark', css[v].dark);
-// documentElement.style.setProperty('--color-light', css[v].light);
-
-// data-settings-cancel.click() { querySelect(data-settings-overlay).open === false }
-// data-settings-form.submit() { actions.settings.submit }
-
-// day = {
-//     dark: '10, 10, 20',
-//     light: '255, 255, 255',
-// }
-
-// night = {
-//     dark: '255, 255, 255',
-//     light: '10, 10, 20',
-// }
