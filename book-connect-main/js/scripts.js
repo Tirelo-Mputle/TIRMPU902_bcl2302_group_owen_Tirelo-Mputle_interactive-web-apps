@@ -20,6 +20,7 @@ html.list.itemsContainer.innerHTML = "";
  * @param {number} bookSliceEnd - The ending index of slice to be taken out of the books array
  * @param {array} otherArray - An array to be used instead of the books array. It will be used in
  * its entirely (no slices taken)
+ * @returns {fragment} - contains book button previews
  */
 const createPreviewsFragment = (
   bookSliceStart,
@@ -58,7 +59,11 @@ const createPreviewsFragment = (
   appStatus.page = appStatus.page + 1;
   return fragment;
 };
-
+/**
+ * Updated the number of books that haven't been displayed yet
+ * @returns - changes the innerHtml of the show more button
+ * and updates the number of books remaining
+ */
 const updateRemainingBooks = () => {
   /**Initial number of books that have not been displayed yet */
   const remainingToDisplay =
@@ -80,16 +85,18 @@ const updateRemainingBooks = () => {
         })</span>`);
 };
 //append the fragment containing book preview buttons to the list
-//div element that should contain the books
+//div element that should contain the books. Update the number of books
+//remaining. This creates what is seen when the page first loads
 html.list.itemsContainer.appendChild(
   createPreviewsFragment(appStatus.range[0], appStatus.range[1])
 );
 updateRemainingBooks();
-// const createPreviewsFragment(booksArray, page x BOOKS_PER_PAGE, {page + 1} x BOOKS_PER_PAGE]){
-//     booksArray, page x BOOKS_PER_PAGE, {page + 1} x BOOKS_PER_PAGE]
-// }
-// html.list.itemsContainer.appendChild(createPreviewsFragment(matches, page x BOOKS_PER_PAGE, {page + 1} x BOOKS_PER_PAGE]))
+
 //SHOW MORE BUTTON
+/**
+ * Creates a fragment contain book button preview and then updates
+ * the number of remaining books and displays it in the show more button.
+ */
 const showMoreBooks = () => {
   html.list.itemsContainer.appendChild(
     createPreviewsFragment(
@@ -100,6 +107,11 @@ const showMoreBooks = () => {
   updateRemainingBooks();
 };
 //TOGGLE OVERLAYS
+/**
+ * Toggles the open and close state dialog modal html elements.
+ * @param {"html element"} element - the dialog modal element to target.
+ * @param {*} focusElement - the element to focus on when the modal is open
+ */
 const toggleOverlay = (element, focusElement = element) => {
   if (element.open) {
     element.close();
