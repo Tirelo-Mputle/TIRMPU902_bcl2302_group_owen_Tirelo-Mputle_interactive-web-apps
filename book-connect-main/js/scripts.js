@@ -120,14 +120,13 @@ const toggleOverlay = (element, focusElement = element) => {
     focusElement.focus();
   }
 };
+/** Toggles the open and close state of the search form modal*/
 const handleToggleSearchOverlay = () => {
   toggleOverlay(html.search.overlay, html.search.title);
 };
-//EVENT LISTENERS
-html.list.button.addEventListener("click", showMoreBooks);
-html.search.icon.addEventListener("click", handleToggleSearchOverlay);
-html.search.cancel.addEventListener("click", handleToggleSearchOverlay);
+
 //SEARCH
+/** */
 const createSelectOption = (valueText, fragment) => {
   const element = document.createElement("option");
   element.value = valueText;
@@ -213,9 +212,16 @@ const handleSearch = (event) => {
 html.search.form.addEventListener("submit", handleSearch);
 
 //BOOKS SUMMARY OVERLAY
+/**Toggles the open and close state of the book summary modal */
 const handletoggleBookSummaryOverlay = () => {
   toggleOverlay(html.active.overlay, html.active.close);
 };
+/**
+ * Finds the button being clicked, opens the book summary modal
+ * and populates the modal with the matching book's content
+ * @param {} event
+ *
+ */
 const handleSummayOverlay = (event) => {
   const activeBook = event.target.closest(".preview");
   if (!activeBook) return;
@@ -236,7 +242,13 @@ const handleSummayOverlay = (event) => {
     }
   }
 };
+
+//EVENT LISTENERS
 html.list.itemsContainer.addEventListener("click", handleSummayOverlay);
 html.active.close.addEventListener("click", handletoggleBookSummaryOverlay);
+html.list.button.addEventListener("click", showMoreBooks);
+html.search.icon.addEventListener("click", handleToggleSearchOverlay);
+html.search.cancel.addEventListener("click", handleToggleSearchOverlay);
 
+//When page loads scroll to the top of the page
 window.scrollTo({ top: 0, behavior: "smooth" });
