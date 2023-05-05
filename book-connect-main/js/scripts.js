@@ -1,6 +1,6 @@
 import { books, genres, authors, BOOKS_PER_PAGE } from "./data.js";
 import { html } from "./view.js";
-/** Object of the global variables of the app */
+/** Object containing the global variables of the app */
 const appStatus = {
   matches: books,
   page: 1,
@@ -10,8 +10,17 @@ const appStatus = {
   results: [],
 };
 //DISPLAY INTITIAL BOOKS CONTENT
+//clear the innerHtml of the list div
 html.list.itemsContainer.innerHTML = "";
 
+/**Creates a fragment containing book preview buttons. It uses a list
+ * of books that are extracted from the books array or any list of books
+ * if otherArray is used.
+ * @param {number} bookSliceStart - The starting index of slice to be taken out of the books array
+ * @param {number} bookSliceEnd - The ending index of slice to be taken out of the books array
+ * @param {array} otherArray - An array to be used instead of the books array. It will be used in
+ * its entirely (no slices taken)
+ */
 const createPreviewsFragment = (
   bookSliceStart,
   bookSliceEnd,

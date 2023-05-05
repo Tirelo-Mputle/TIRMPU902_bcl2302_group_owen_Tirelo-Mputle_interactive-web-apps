@@ -26,16 +26,11 @@ export const html = {
     authors: document.querySelector("[data-search-authors]"),
     cancel: document.querySelector("[data-search-cancel]"),
     icon: document.querySelector("[data-header-search]"),
-
-    //todo add attribute to index.html
-    // submit: document.querySelector("[data-search-submit]"),
   },
   settings: {
     overlay: document.querySelector("[data-settings-overlay]"),
     form: document.querySelector("[data-settings-form]"),
     theme: document.querySelector("[data-settings-theme]"),
     cancel: document.querySelector("[data-settings-cancel]"),
-    //todo add attribute to index.html
-    // save: document.querySelector("[data-settings-save]"),
   },
 };
