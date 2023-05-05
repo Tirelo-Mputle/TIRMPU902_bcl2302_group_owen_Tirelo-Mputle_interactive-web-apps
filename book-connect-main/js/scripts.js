@@ -216,8 +216,6 @@ const handleSearch = (event) => {
   }
 };
 
-html.search.form.addEventListener("submit", handleSearch);
-
 //BOOKS SUMMARY OVERLAY
 /**Toggles the open and close state of the book summary modal */
 const handletoggleBookSummaryOverlay = () => {
@@ -256,6 +254,7 @@ html.active.close.addEventListener("click", handletoggleBookSummaryOverlay);
 html.list.button.addEventListener("click", showMoreBooks);
 html.search.icon.addEventListener("click", handleToggleSearchOverlay);
 html.search.cancel.addEventListener("click", handleToggleSearchOverlay);
+html.search.form.addEventListener("submit", handleSearch);
 
 //When page loads scroll to the top of the page
 window.scrollTo({ top: 0, behavior: "smooth" });
