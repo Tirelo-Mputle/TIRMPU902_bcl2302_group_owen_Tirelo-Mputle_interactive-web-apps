@@ -126,7 +126,11 @@ const handleToggleSearchOverlay = () => {
 };
 
 //SEARCH
-/** */
+/**
+ * Creates an option element and appends it to a fragment
+ * @param {} valueText -the value of the option element
+ * @param {*} fragment - the fragment that the option will be attached to.
+ */
 const createSelectOption = (valueText, fragment) => {
   const element = document.createElement("option");
   element.value = valueText;
@@ -150,7 +154,10 @@ for (let [id, authorNam] of Object.entries(authors)) {
 }
 
 html.search.authors.appendChild(authorsFragment);
-
+/**
+ * Takes in user form data to filter through the books.
+ * @param {*} event
+ */
 const handleSearch = (event) => {
   event.preventDefault();
   toggleOverlay(html.search.overlay);
