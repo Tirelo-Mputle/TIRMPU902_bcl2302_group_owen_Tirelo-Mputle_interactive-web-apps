@@ -1,6 +1,6 @@
 # TIRMPU902_bcl2302_group_owen_Tirelo-Mputle_interactive-web-apps
 
-IWA 19 (Book connect app) powerpoint presentation: https://docs.google.com/presentation/d/1QUqtV8p926cNrY7ycpnv0YtLqaZT_tDROJQcp9W2_zk/edit#slide=id.g23f34f91f6c_2_123
+IWA 19 (Book connect app) powerpoint presentation (PDF): https://drive.google.com/file/d/1Ct1rgAIGfxva71RoFHQKlDz-PXmasS7P/view
 
 Book Connect, a social media platform specifically targeted at book enthusiasts.
 
