@@ -2,7 +2,7 @@
 Author: Tirelo Mputle <br>
 <br>
 
-## Key project:Book connect app
+## Key project: Book connect app
 
 🔗(PDF): https://drive.google.com/file/d/1Ct1rgAIGfxva71RoFHQKlDz-PXmasS7P/view
 
