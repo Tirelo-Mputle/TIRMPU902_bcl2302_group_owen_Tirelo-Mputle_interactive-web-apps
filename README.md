@@ -8,7 +8,7 @@ Author: Tirelo Mputle <br>
 
 Book Connect, a social media platform specifically targeted at book enthusiasts. <br>
 
-####The aim of the app is to satisfy the following user stories.<br>
+#### The aim of the app is to satisfy the following user stories.<br>
 <br>
 * As a user, I want to view a list of book previews, by title and author, so that I can discover new books to read. <br>
 * As a user, I want an image associated with all book previews so that I can recognize a book by the cover even if I forgot the name. <br>
